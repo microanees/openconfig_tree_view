@@ -1,0 +1,76 @@
+module: openconfig-probes
+  +--rw probes
+     +--rw probe* [name]
+        +--rw name      -> ../config/name
+        +--rw config
+        |  +--rw name       string
+        |  +--rw enabled?   boolean
+        +--ro state
+        |  +--ro name       string
+        |  +--ro enabled?   boolean
+        +--rw tests
+           +--rw test* [name]
+              +--rw name       -> ../config/name
+              +--rw config
+              |  +--rw name            string
+              |  +--rw enabled?        boolean
+              |  +--rw test-type       oc-probes-types:test-type
+              |  +--rw count?          yang:counter64
+              |  +--rw interval?       yang:counter64
+              |  +--rw source?         oc-inet:ip-address
+              |  +--rw history-size?   yang:counter64
+              |  +--rw source-port?    oc-inet:port-number
+              |  +--rw dscp?           oc-inet:dscp
+              +--ro state
+              |  +--ro name            string
+              |  +--ro enabled?        boolean
+              |  +--ro test-type       oc-probes-types:test-type
+              |  +--ro count?          yang:counter64
+              |  +--ro interval?       yang:counter64
+              |  +--ro source?         oc-inet:ip-address
+              |  +--ro history-size?   yang:counter64
+              |  +--ro source-port?    oc-inet:port-number
+              |  +--ro dscp?           oc-inet:dscp
+              +--rw target
+              |  +--rw config
+              |  |  +--rw address?   oc-inet:ip-address
+              |  |  +--rw port?      oc-inet:port-number
+              |  |  +--rw url?       oc-inet:url
+              |  +--ro state
+              |     +--ro address?   oc-inet:ip-address
+              |     +--ro port?      oc-inet:port-number
+              |     +--ro url?       oc-inet:url
+              +--rw results
+                 +--ro state
+                 |  +--ro timestamp?             oc-types:timeticks64
+                 |  +--ro start-timestamp?       oc-types:timeticks64
+                 |  +--ro last-test-timestamp?   oc-types:timeticks64
+                 |  +--ro test-duration?         yang:counter64
+                 |  +--ro failed?                boolean
+                 |  +--ro probes-sent?           yang:counter64
+                 |  +--ro probes-received?       yang:counter64
+                 |  +--ro loss-percentage?       oc-types:percentage
+                 |  +--ro jitter?                yang:counter64
+                 |  +--ro min-delay?             yang:counter64
+                 |  +--ro max-delay?             yang:counter64
+                 |  +--ro avg-delay?             yang:counter64
+                 |  +--ro stddev-delay?          yang:counter64
+                 +--ro history
+                    +--ro items
+                       +--ro item* [id]
+                          +--ro id       -> ../state/id
+                          +--ro state
+                             +--ro id?                yang:counter64
+                             +--ro timestamp?         oc-types:timeticks64
+                             +--ro start-timestamp?   oc-types:timeticks64
+                             +--ro end-timestamp?     oc-types:timeticks64
+                             +--ro test-duration?     yang:counter64
+                             +--ro failed?            boolean
+                             +--ro probes-sent?       yang:counter64
+                             +--ro probes-received?   yang:counter64
+                             +--ro loss-percentage?   oc-types:percentage
+                             +--ro jitter?            yang:counter64
+                             +--ro min-delay?         yang:counter64
+                             +--ro max-delay?         yang:counter64
+                             +--ro avg-delay?         yang:counter64
+                             +--ro stddev-delay?      yang:counter64

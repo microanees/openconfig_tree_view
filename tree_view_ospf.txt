@@ -1,0 +1,21 @@
+
+module: openconfig-ospf-policy
+  augment /oc-rpol:routing-policy/oc-rpol:policy-definitions/oc-rpol:policy-definition/oc-rpol:statements/oc-rpol:statement/oc-rpol:conditions:
+    +--rw ospf-conditions
+       +--rw config
+       |  +--rw area-eq?   oc-ospf-types:ospf-area-identifier
+       +--ro state
+          +--ro area-eq?   oc-ospf-types:ospf-area-identifier
+  augment /oc-rpol:routing-policy/oc-rpol:policy-definitions/oc-rpol:policy-definition/oc-rpol:statements/oc-rpol:statement/oc-rpol:actions:
+    +--rw ospf-actions
+       +--rw config
+       |  +--rw set-area?   oc-ospf-types:ospf-area-identifier
+       +--ro state
+       |  +--ro set-area?   oc-ospf-types:ospf-area-identifier
+       +--rw set-metric
+          +--rw config
+          |  +--rw metric-type?   enumeration
+          |  +--rw metric?        oc-ospf-types:ospf-metric
+          +--ro state
+             +--ro metric-type?   enumeration
+             +--ro metric?        oc-ospf-types:ospf-metric

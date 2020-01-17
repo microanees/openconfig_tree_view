@@ -1,0 +1,94 @@
+module: openconfig-routing-policy
+  +--rw routing-policy
+     +--rw defined-sets
+     |  +--rw prefix-sets
+     |  |  +--rw prefix-set* [name]
+     |  |     +--rw name        -> ../config/name
+     |  |     +--rw config
+     |  |     |  +--rw name?   string
+     |  |     |  +--rw mode?   enumeration
+     |  |     +--ro state
+     |  |     |  +--ro name?   string
+     |  |     |  +--ro mode?   enumeration
+     |  |     +--rw prefixes
+     |  |        +--rw prefix* [ip-prefix masklength-range]
+     |  |           +--rw ip-prefix           -> ../config/ip-prefix
+     |  |           +--rw masklength-range    -> ../config/masklength-range
+     |  |           +--rw config
+     |  |           |  +--rw ip-prefix           oc-inet:ip-prefix
+     |  |           |  +--rw masklength-range?   string
+     |  |           +--ro state
+     |  |              +--ro ip-prefix           oc-inet:ip-prefix
+     |  |              +--ro masklength-range?   string
+     |  +--rw neighbor-sets
+     |  |  +--rw neighbor-set* [name]
+     |  |     +--rw name      -> ../config/name
+     |  |     +--rw config
+     |  |     |  +--rw name?      string
+     |  |     |  +--rw address*   oc-inet:ip-address
+     |  |     +--ro state
+     |  |        +--ro name?      string
+     |  |        +--ro address*   oc-inet:ip-address
+     |  +--rw tag-sets
+     |     +--rw tag-set* [name]
+     |        +--rw name      -> ../config/name
+     |        +--rw config
+     |        |  +--rw name?        string
+     |        |  +--rw tag-value*   oc-pol-types:tag-type
+     |        +--ro state
+     |           +--ro name?        string
+     |           +--ro tag-value*   oc-pol-types:tag-type
+     +--rw policy-definitions
+        +--rw policy-definition* [name]
+           +--rw name          -> ../config/name
+           +--rw config
+           |  +--rw name?   string
+           +--ro state
+           |  +--ro name?   string
+           +--rw statements
+              +--rw statement* [name]
+                 +--rw name          -> ../config/name
+                 +--rw config
+                 |  +--rw name?   string
+                 +--ro state
+                 |  +--ro name?   string
+                 +--rw conditions
+                 |  +--rw config
+                 |  |  +--rw call-policy?           -> ../../../../../../../policy-definitions/policy-definition/name
+                 |  |  +--rw install-protocol-eq?   identityref
+                 |  +--ro state
+                 |  |  +--ro call-policy?           -> ../../../../../../../policy-definitions/policy-definition/name
+                 |  |  +--ro install-protocol-eq?   identityref
+                 |  +--rw match-interface
+                 |  |  +--rw config
+                 |  |  |  +--rw interface?      -> /oc-if:interfaces/interface/name
+                 |  |  |  +--rw subinterface?   -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+                 |  |  +--ro state
+                 |  |     +--ro interface?      -> /oc-if:interfaces/interface/name
+                 |  |     +--ro subinterface?   -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+                 |  +--rw match-prefix-set
+                 |  |  +--rw config
+                 |  |  |  +--rw prefix-set?          -> ../../../../../../../../defined-sets/prefix-sets/prefix-set/config/name
+                 |  |  |  +--rw match-set-options?   oc-pol-types:match-set-options-restricted-type
+                 |  |  +--ro state
+                 |  |     +--ro prefix-set?          -> ../../../../../../../../defined-sets/prefix-sets/prefix-set/config/name
+                 |  |     +--ro match-set-options?   oc-pol-types:match-set-options-restricted-type
+                 |  +--rw match-neighbor-set
+                 |  |  +--rw config
+                 |  |  |  +--rw neighbor-set?        -> ../../../../../../../../defined-sets/neighbor-sets/neighbor-set/name
+                 |  |  |  +--rw match-set-options?   oc-pol-types:match-set-options-restricted-type
+                 |  |  +--ro state
+                 |  |     +--ro neighbor-set?        -> ../../../../../../../../defined-sets/neighbor-sets/neighbor-set/name
+                 |  |     +--ro match-set-options?   oc-pol-types:match-set-options-restricted-type
+                 |  +--rw match-tag-set
+                 |     +--rw config
+                 |     |  +--rw tag-set?             -> ../../../../../../../../defined-sets/tag-sets/tag-set/name
+                 |     |  +--rw match-set-options?   oc-pol-types:match-set-options-restricted-type
+                 |     +--ro state
+                 |        +--ro tag-set?             -> ../../../../../../../../defined-sets/tag-sets/tag-set/name
+                 |        +--ro match-set-options?   oc-pol-types:match-set-options-restricted-type
+                 +--rw actions
+                    +--rw config
+                    |  +--rw policy-result?   policy-result-type
+                    +--ro state
+                       +--ro policy-result?   policy-result-type

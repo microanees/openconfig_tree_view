@@ -1,0 +1,68 @@
+module: openconfig-module-catalog
+  +--rw organizations
+     +--rw organization* [name]
+        +--rw name               string
+        +--rw type?              identityref
+        +--rw contact?           string
+        +--rw modules
+        |  +--rw module* [name version]
+        |     +--rw name              string
+        |     +--rw version           oc-cat-types:module-version-type
+        |     +--rw namespace?        string
+        |     +--rw prefix?           string
+        |     +--rw revision?         string
+        |     +--rw summary?          string
+        |     +--rw classification
+        |     |  +--rw category?            identityref
+        |     |  +--rw subcategory?         identityref
+        |     |  +--rw deployment-status?   identityref
+        |     +--rw dependencies
+        |     |  +--rw required-module*   string
+        |     +--rw access
+        |     |  +--rw uri?        oc-inet:uri
+        |     |  +--rw md5-hash?   string
+        |     +--rw submodules
+        |        +--rw submodule* [name]
+        |           +--rw name      string
+        |           +--rw access
+        |              +--rw uri?        oc-inet:uri
+        |              +--rw md5-hash?   string
+        +--rw release-bundles
+        |  +--rw release-bundle* [name version]
+        |     +--rw name       string
+        |     +--rw version    oc-cat-types:module-version-type
+        |     +--rw members
+        |        +--rw member* [id]
+        |           +--rw id                     string
+        |           +--rw type?                  identityref
+        |           +--rw module?                -> ../../../../../../../organizations/organization[name=current()/../publisher]/modules/module/name
+        |           +--rw release-bundle?        -> ../../../../../../../organizations/organization[name=current()/../publisher]/release-bundles/release-bundle/name
+        |           +--rw publisher?             -> ../../../../../../../organizations/organization/name
+        |           +--rw compatible-versions*   oc-cat-types:module-version-type
+        +--rw feature-bundles
+        |  +--rw feature-bundle* [name version]
+        |     +--rw name               string
+        |     +--rw version            oc-cat-types:module-version-type
+        |     +--rw path*              string
+        |     +--rw release-bundle
+        |     |  +--rw name?        -> ../../../../../../organizations/organization[name=current()/../publisher]/release-bundles/release-bundle/name
+        |     |  +--rw publisher?   -> ../../../../../../organizations/organization/name
+        |     |  +--rw version?     oc-cat-types:module-version-type
+        |     +--rw feature-bundles
+        |        +--rw feature-bundle* [name]
+        |           +--rw name         -> ../../../../../../../organizations/organization[name=current()/../publisher]/feature-bundles/feature-bundle/name
+        |           +--rw publisher?   -> ../../../../../../../organizations/organization/name
+        |           +--rw version?     oc-cat-types:module-version-type
+        +--rw implementations
+           +--rw implementation* [id]
+              +--rw id                  string
+              +--rw description?        string
+              +--rw reference?          union
+              +--rw platform?           string
+              +--rw platform-version?   string
+              +--rw status?             identityref
+              +--rw feature-bundles
+                 +--rw feature-bundle* [name version]
+                    +--rw name         -> ../../../../../../../organizations/organization[name=current()/../publisher]/feature-bundles/feature-bundle/name
+                    +--rw publisher?   -> ../../../../../../../organizations/organization/name
+                    +--rw version      oc-cat-types:module-version-type

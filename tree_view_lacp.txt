@@ -1,0 +1,45 @@
+module: openconfig-lacp
+  +--rw lacp
+     +--rw config
+     |  +--rw system-priority?   uint16
+     +--ro state
+     |  +--ro system-priority?   uint16
+     +--rw interfaces
+        +--rw interface* [name]
+           +--rw name       -> ../config/name
+           +--rw config
+           |  +--rw name?              oc-if:base-interface-ref
+           |  +--rw interval?          lacp-period-type
+           |  +--rw lacp-mode?         lacp-activity-type
+           |  +--rw system-id-mac?     oc-yang:mac-address
+           |  +--rw system-priority?   uint16
+           +--ro state
+           |  +--ro name?              oc-if:base-interface-ref
+           |  +--ro interval?          lacp-period-type
+           |  +--ro lacp-mode?         lacp-activity-type
+           |  +--ro system-id-mac?     oc-yang:mac-address
+           |  +--ro system-priority?   uint16
+           +--ro members
+              +--ro member* [interface]
+                 +--ro interface    -> ../state/interface
+                 +--ro state
+                    +--ro interface?          oc-if:base-interface-ref
+                    +--ro activity?           lacp-activity-type
+                    +--ro timeout?            lacp-timeout-type
+                    +--ro synchronization?    lacp-synchronization-type
+                    +--ro aggregatable?       boolean
+                    +--ro collecting?         boolean
+                    +--ro distributing?       boolean
+                    +--ro system-id?          oc-yang:mac-address
+                    +--ro oper-key?           uint16
+                    +--ro partner-id?         oc-yang:mac-address
+                    +--ro partner-key?        uint16
+                    +--ro port-num?           uint16
+                    +--ro partner-port-num?   uint16
+                    +--ro counters
+                       +--ro lacp-in-pkts?          oc-yang:counter64
+                       +--ro lacp-out-pkts?         oc-yang:counter64
+                       +--ro lacp-rx-errors?        oc-yang:counter64
+                       +--ro lacp-tx-errors?        oc-yang:counter64
+                       +--ro lacp-unknown-errors?   oc-yang:counter64
+                       +--ro lacp-errors?           oc-yang:counter64

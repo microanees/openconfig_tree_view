@@ -1,0 +1,115 @@
+module: openconfig-relay-agent
+  +--rw relay-agent
+     +--rw dhcp
+     |  +--rw config
+     |  |  +--rw enable-relay-agent?   boolean
+     |  +--ro state
+     |  |  +--ro enable-relay-agent?   boolean
+     |  +--rw agent-information-option
+     |  |  +--rw config
+     |  |  |  +--rw enable?   boolean
+     |  |  +--ro state
+     |  |     +--ro enable?   boolean
+     |  +--rw interfaces
+     |     +--rw interface* [id]
+     |        +--rw id                          -> ../config/id
+     |        +--rw config
+     |        |  +--rw id?               oc-if:interface-id
+     |        |  +--rw enable?           boolean
+     |        |  +--rw helper-address*   inet:ip-address
+     |        +--ro state
+     |        |  +--ro id?               oc-if:interface-id
+     |        |  +--ro enable?           boolean
+     |        |  +--ro helper-address*   inet:ip-address
+     |        |  +--ro counters
+     |        |     +--ro total-dropped?            yang:counter64
+     |        |     +--ro invalid-opcode?           yang:counter64
+     |        |     +--ro invalid-options?          yang:counter64
+     |        |     +--ro bootrequest-received?     yang:counter64
+     |        |     +--ro dhcp-decline-received?    yang:counter64
+     |        |     +--ro dhcp-discover-received?   yang:counter64
+     |        |     +--ro dhcp-inform-received?     yang:counter64
+     |        |     +--ro dhcp-release-received?    yang:counter64
+     |        |     +--ro dhcp-request-received?    yang:counter64
+     |        |     +--ro bootrequest-sent?         yang:counter64
+     |        |     +--ro bootreply-sent?           yang:counter64
+     |        |     +--ro dhcp-offer-sent?          yang:counter64
+     |        |     +--ro dhcp-ack-sent?            yang:counter64
+     |        |     +--ro dhcp-nack-sent?           yang:counter64
+     |        +--rw interface-ref
+     |        |  +--rw config
+     |        |  |  +--rw interface?      -> /oc-if:interfaces/interface/name
+     |        |  |  +--rw subinterface?   -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+     |        |  +--ro state
+     |        |     +--ro interface?      -> /oc-if:interfaces/interface/name
+     |        |     +--ro subinterface?   -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+     |        +--rw agent-information-option
+     |           +--rw config
+     |           |  +--rw enable?       boolean
+     |           |  +--rw circuit-id?   string
+     |           |  +--rw remote-id?    string
+     |           +--ro state
+     |              +--ro enable?            boolean
+     |              +--ro circuit-id?        string
+     |              +--ro remote-id?         string
+     |              +--ro sent-circuit-id?   string
+     |              +--ro sent-remote-id?    string
+     +--rw dhcpv6
+        +--rw config
+        |  +--rw enable-relay-agent?   boolean
+        +--ro state
+        |  +--ro enable-relay-agent?   boolean
+        +--rw options
+        |  +--rw config
+        |  |  +--rw enable-interface-id?   boolean
+        |  |  +--rw enable-remote-id?      boolean
+        |  +--ro state
+        |     +--ro enable-interface-id?   boolean
+        |     +--ro enable-remote-id?      boolean
+        +--rw interfaces
+           +--rw interface* [id]
+              +--rw id               -> ../config/id
+              +--rw config
+              |  +--rw id?               oc-if:interface-id
+              |  +--rw enable?           boolean
+              |  +--rw helper-address*   inet:ipv6-address
+              +--ro state
+              |  +--ro id?               oc-if:interface-id
+              |  +--ro enable?           boolean
+              |  +--ro helper-address*   inet:ipv6-address
+              |  +--ro counters
+              |     +--ro total-dropped?                  yang:counter64
+              |     +--ro invalid-opcode?                 yang:counter64
+              |     +--ro invalid-options?                yang:counter64
+              |     +--ro dhcpv6-solicit-received?        yang:counter64
+              |     +--ro dhcpv6-decline-received?        yang:counter64
+              |     +--ro dhcpv6-request-received?        yang:counter64
+              |     +--ro dhcpv6-release-received?        yang:counter64
+              |     +--ro dhcpv6-confirm-received?        yang:counter64
+              |     +--ro dhcpv6-rebind-received?         yang:counter64
+              |     +--ro dhcpv6-info-request-received?   yang:counter64
+              |     +--ro dhcpv6-relay-reply-received?    yang:counter64
+              |     +--ro dhcpv6-adverstise-sent?         yang:counter64
+              |     +--ro dhcpv6-reply-sent?              yang:counter64
+              |     +--ro dhcpv6-reconfigure-sent?        yang:counter64
+              |     +--ro dhcpv6-relay-forw-sent?         yang:counter64
+              +--rw interface-ref
+              |  +--rw config
+              |  |  +--rw interface?      -> /oc-if:interfaces/interface/name
+              |  |  +--rw subinterface?   -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+              |  +--ro state
+              |     +--ro interface?      -> /oc-if:interfaces/interface/name
+              |     +--ro subinterface?   -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+              +--rw options
+                 +--rw config
+                 |  +--rw enable-interface-id?   boolean
+                 |  +--rw enable-remote-id?      boolean
+                 |  +--rw interface-id?          string
+                 |  +--rw remote-id?             string
+                 +--ro state
+                    +--ro enable-interface-id?   boolean
+                    +--ro enable-remote-id?      boolean
+                    +--ro interface-id?          string
+                    +--ro remote-id?             string
+                    +--ro sent-interface-id?     string
+                    +--ro sent-remote-id?        string

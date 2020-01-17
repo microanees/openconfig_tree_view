@@ -1,0 +1,695 @@
+module: openconfig-channel-monitor
+  +--rw channel-monitors
+     +--rw channel-monitor* [name]
+        +--rw name        -> ../config/name
+        +--rw config
+        |  +--rw name?           -> /oc-platform:components/component/name
+        |  +--rw monitor-port?   -> /oc-platform:components/component/name
+        +--ro state
+        |  +--ro name?           -> /oc-platform:components/component/name
+        |  +--ro monitor-port?   -> /oc-platform:components/component/name
+        +--rw channels
+           +--ro channel* [lower-frequency upper-frequency]
+              +--ro lower-frequency    -> ../state/lower-frequency
+              +--ro upper-frequency    -> ../state/upper-frequency
+              +--ro state
+                 +--ro lower-frequency?   oc-opt-types:frequency-type
+                 +--ro upper-frequency?   oc-opt-types:frequency-type
+                 +--ro power?             decimal64
+module: openconfig-optical-amplifier
+  +--rw optical-amplifier
+     +--rw amplifiers
+     |  +--rw amplifier* [name]
+     |     +--rw name      -> ../config/name
+     |     +--rw config
+     |     |  +--rw name?                  string
+     |     |  +--rw type?                  identityref
+     |     |  +--rw target-gain?           decimal64
+     |     |  +--rw min-gain?              decimal64
+     |     |  +--rw max-gain?              decimal64
+     |     |  +--rw target-gain-tilt?      decimal64
+     |     |  +--rw gain-range?            identityref
+     |     |  +--rw amp-mode?              identityref
+     |     |  +--rw target-output-power?   decimal64
+     |     |  +--rw max-output-power?      decimal64
+     |     |  +--rw enabled?               boolean
+     |     |  +--rw fiber-type-profile?    identityref
+     |     +--ro state
+     |        +--ro name?                  string
+     |        +--ro type?                  identityref
+     |        +--ro target-gain?           decimal64
+     |        +--ro min-gain?              decimal64
+     |        +--ro max-gain?              decimal64
+     |        +--ro target-gain-tilt?      decimal64
+     |        +--ro gain-range?            identityref
+     |        +--ro amp-mode?              identityref
+     |        +--ro target-output-power?   decimal64
+     |        +--ro max-output-power?      decimal64
+     |        +--ro enabled?               boolean
+     |        +--ro fiber-type-profile?    identityref
+     |        +--ro component?             -> /oc-platform:components/component/name
+     |        +--ro ingress-port?          -> /oc-platform:components/component/name
+     |        +--ro egress-port?           -> /oc-platform:components/component/name
+     |        +--ro actual-gain
+     |        |  +--ro instant?    decimal64
+     |        |  +--ro avg?        decimal64
+     |        |  +--ro min?        decimal64
+     |        |  +--ro max?        decimal64
+     |        |  +--ro interval?   oc-types:stat-interval
+     |        |  +--ro min-time?   oc-types:timeticks64
+     |        |  +--ro max-time?   oc-types:timeticks64
+     |        +--ro actual-gain-tilt
+     |        |  +--ro instant?    decimal64
+     |        |  +--ro avg?        decimal64
+     |        |  +--ro min?        decimal64
+     |        |  +--ro max?        decimal64
+     |        |  +--ro interval?   oc-types:stat-interval
+     |        |  +--ro min-time?   oc-types:timeticks64
+     |        |  +--ro max-time?   oc-types:timeticks64
+     |        +--ro input-power-total
+     |        |  +--ro instant?    decimal64
+     |        |  +--ro avg?        decimal64
+     |        |  +--ro min?        decimal64
+     |        |  +--ro max?        decimal64
+     |        |  +--ro interval?   oc-types:stat-interval
+     |        |  +--ro min-time?   oc-types:timeticks64
+     |        |  +--ro max-time?   oc-types:timeticks64
+     |        +--ro input-power-c-band
+     |        |  +--ro instant?    decimal64
+     |        |  +--ro avg?        decimal64
+     |        |  +--ro min?        decimal64
+     |        |  +--ro max?        decimal64
+     |        |  +--ro interval?   oc-types:stat-interval
+     |        |  +--ro min-time?   oc-types:timeticks64
+     |        |  +--ro max-time?   oc-types:timeticks64
+     |        +--ro input-power-l-band
+     |        |  +--ro instant?    decimal64
+     |        |  +--ro avg?        decimal64
+     |        |  +--ro min?        decimal64
+     |        |  +--ro max?        decimal64
+     |        |  +--ro interval?   oc-types:stat-interval
+     |        |  +--ro min-time?   oc-types:timeticks64
+     |        |  +--ro max-time?   oc-types:timeticks64
+     |        +--ro output-power-total
+     |        |  +--ro instant?    decimal64
+     |        |  +--ro avg?        decimal64
+     |        |  +--ro min?        decimal64
+     |        |  +--ro max?        decimal64
+     |        |  +--ro interval?   oc-types:stat-interval
+     |        |  +--ro min-time?   oc-types:timeticks64
+     |        |  +--ro max-time?   oc-types:timeticks64
+     |        +--ro output-power-c-band
+     |        |  +--ro instant?    decimal64
+     |        |  +--ro avg?        decimal64
+     |        |  +--ro min?        decimal64
+     |        |  +--ro max?        decimal64
+     |        |  +--ro interval?   oc-types:stat-interval
+     |        |  +--ro min-time?   oc-types:timeticks64
+     |        |  +--ro max-time?   oc-types:timeticks64
+     |        +--ro output-power-l-band
+     |        |  +--ro instant?    decimal64
+     |        |  +--ro avg?        decimal64
+     |        |  +--ro min?        decimal64
+     |        |  +--ro max?        decimal64
+     |        |  +--ro interval?   oc-types:stat-interval
+     |        |  +--ro min-time?   oc-types:timeticks64
+     |        |  +--ro max-time?   oc-types:timeticks64
+     |        +--ro laser-bias-current
+     |        |  +--ro instant?    decimal64
+     |        |  +--ro avg?        decimal64
+     |        |  +--ro min?        decimal64
+     |        |  +--ro max?        decimal64
+     |        |  +--ro interval?   oc-types:stat-interval
+     |        |  +--ro min-time?   oc-types:timeticks64
+     |        |  +--ro max-time?   oc-types:timeticks64
+     |        +--ro optical-return-loss
+     |           +--ro instant?    decimal64
+     |           +--ro avg?        decimal64
+     |           +--ro min?        decimal64
+     |           +--ro max?        decimal64
+     |           +--ro interval?   oc-types:stat-interval
+     |           +--ro min-time?   oc-types:timeticks64
+     |           +--ro max-time?   oc-types:timeticks64
+     +--rw supervisory-channels
+        +--rw supervisory-channel* [interface]
+           +--rw interface    -> ../config/interface
+           +--rw config
+           |  +--rw interface?   oc-if:base-interface-ref
+           +--ro state
+              +--ro interface?            oc-if:base-interface-ref
+              +--ro input-power
+              |  +--ro instant?    decimal64
+              |  +--ro avg?        decimal64
+              |  +--ro min?        decimal64
+              |  +--ro max?        decimal64
+              |  +--ro interval?   oc-types:stat-interval
+              |  +--ro min-time?   oc-types:timeticks64
+              |  +--ro max-time?   oc-types:timeticks64
+              +--ro output-power
+              |  +--ro instant?    decimal64
+              |  +--ro avg?        decimal64
+              |  +--ro min?        decimal64
+              |  +--ro max?        decimal64
+              |  +--ro interval?   oc-types:stat-interval
+              |  +--ro min-time?   oc-types:timeticks64
+              |  +--ro max-time?   oc-types:timeticks64
+              +--ro laser-bias-current
+              |  +--ro instant?    decimal64
+              |  +--ro avg?        decimal64
+              |  +--ro min?        decimal64
+              |  +--ro max?        decimal64
+              |  +--ro interval?   oc-types:stat-interval
+              |  +--ro min-time?   oc-types:timeticks64
+              |  +--ro max-time?   oc-types:timeticks64
+              +--ro output-frequency?     oc-opt-types:frequency-type
+module: openconfig-optical-attenuator
+  +--rw optical-attenuator
+     +--rw attenuators
+        +--rw attenuator* [name]
+           +--rw name      -> ../config/name
+           +--rw config
+           |  +--rw name?                  string
+           |  +--rw attenuation-mode?      identityref
+           |  +--rw target-output-power?   decimal64
+           |  +--rw attenuation?           decimal64
+           |  +--rw enabled?               boolean
+           +--ro state
+              +--ro name?                  string
+              +--ro attenuation-mode?      identityref
+              +--ro target-output-power?   decimal64
+              +--ro attenuation?           decimal64
+              +--ro enabled?               boolean
+              +--ro component?             -> /oc-platform:components/component/name
+              +--ro ingress-port?          -> /oc-platform:components/component/name
+              +--ro egress-port?           -> /oc-platform:components/component/name
+              +--ro actual-attenuation
+              |  +--ro instant?    decimal64
+              |  +--ro avg?        decimal64
+              |  +--ro min?        decimal64
+              |  +--ro max?        decimal64
+              |  +--ro interval?   oc-types:stat-interval
+              |  +--ro min-time?   oc-types:timeticks64
+              |  +--ro max-time?   oc-types:timeticks64
+              +--ro output-power-total
+              |  +--ro instant?    decimal64
+              |  +--ro avg?        decimal64
+              |  +--ro min?        decimal64
+              |  +--ro max?        decimal64
+              |  +--ro interval?   oc-types:stat-interval
+              |  +--ro min-time?   oc-types:timeticks64
+              |  +--ro max-time?   oc-types:timeticks64
+              +--ro optical-return-loss
+                 +--ro instant?    decimal64
+                 +--ro avg?        decimal64
+                 +--ro min?        decimal64
+                 +--ro max?        decimal64
+                 +--ro interval?   oc-types:stat-interval
+                 +--ro min-time?   oc-types:timeticks64
+                 +--ro max-time?   oc-types:timeticks64
+module: openconfig-terminal-device
+  +--rw terminal-device
+     +--rw config
+     +--ro state
+     +--rw logical-channels
+     |  +--rw channel* [index]
+     |     +--rw index                          -> ../config/index
+     |     +--rw config
+     |     |  +--rw index?                  uint32
+     |     |  +--rw description?            string
+     |     |  +--rw admin-state?            oc-opt-types:admin-state-type
+     |     |  +--rw rate-class?             identityref
+     |     |  +--rw trib-protocol?          identityref
+     |     |  +--rw logical-channel-type?   identityref
+     |     |  +--rw loopback-mode?          oc-opt-types:loopback-mode-type
+     |     |  +--rw test-signal?            boolean
+     |     +--ro state
+     |     |  +--ro index?                  uint32
+     |     |  +--ro description?            string
+     |     |  +--ro admin-state?            oc-opt-types:admin-state-type
+     |     |  +--ro rate-class?             identityref
+     |     |  +--ro trib-protocol?          identityref
+     |     |  +--ro logical-channel-type?   identityref
+     |     |  +--ro loopback-mode?          oc-opt-types:loopback-mode-type
+     |     |  +--ro test-signal?            boolean
+     |     |  +--ro link-state?             enumeration
+     |     +--rw otn
+     |     |  +--rw config
+     |     |  |  +--rw tti-msg-transmit?             string
+     |     |  |  +--rw tti-msg-expected?             string
+     |     |  |  +--rw tti-msg-auto?                 boolean
+     |     |  |  +--rw tributary-slot-granularity?   identityref
+     |     |  +--ro state
+     |     |     +--ro tti-msg-transmit?             string
+     |     |     +--ro tti-msg-expected?             string
+     |     |     +--ro tti-msg-auto?                 boolean
+     |     |     +--ro tributary-slot-granularity?   identityref
+     |     |     +--ro tti-msg-recv?                 string
+     |     |     +--ro rdi-msg?                      string
+     |     |     +--ro errored-seconds?              yang:counter64
+     |     |     +--ro severely-errored-seconds?     yang:counter64
+     |     |     +--ro unavailable-seconds?          yang:counter64
+     |     |     +--ro code-violations?              yang:counter64
+     |     |     +--ro errored-blocks?               yang:counter64
+     |     |     +--ro fec-uncorrectable-blocks?     yang:counter64
+     |     |     +--ro fec-uncorrectable-words?      yang:counter64
+     |     |     +--ro fec-corrected-bytes?          yang:counter64
+     |     |     +--ro fec-corrected-bits?           yang:counter64
+     |     |     +--ro background-block-errors?      yang:counter64
+     |     |     +--ro pre-fec-ber
+     |     |     |  +--ro instant?    decimal64
+     |     |     |  +--ro avg?        decimal64
+     |     |     |  +--ro min?        decimal64
+     |     |     |  +--ro max?        decimal64
+     |     |     |  +--ro interval?   oc-types:stat-interval
+     |     |     |  +--ro min-time?   oc-types:timeticks64
+     |     |     |  +--ro max-time?   oc-types:timeticks64
+     |     |     +--ro post-fec-ber
+     |     |     |  +--ro instant?    decimal64
+     |     |     |  +--ro avg?        decimal64
+     |     |     |  +--ro min?        decimal64
+     |     |     |  +--ro max?        decimal64
+     |     |     |  +--ro interval?   oc-types:stat-interval
+     |     |     |  +--ro min-time?   oc-types:timeticks64
+     |     |     |  +--ro max-time?   oc-types:timeticks64
+     |     |     +--ro q-value
+     |     |     |  +--ro instant?    decimal64
+     |     |     |  +--ro avg?        decimal64
+     |     |     |  +--ro min?        decimal64
+     |     |     |  +--ro max?        decimal64
+     |     |     |  +--ro interval?   oc-types:stat-interval
+     |     |     |  +--ro min-time?   oc-types:timeticks64
+     |     |     |  +--ro max-time?   oc-types:timeticks64
+     |     |     +--ro esnr
+     |     |        +--ro instant?    decimal64
+     |     |        +--ro avg?        decimal64
+     |     |        +--ro min?        decimal64
+     |     |        +--ro max?        decimal64
+     |     |        +--ro interval?   oc-types:stat-interval
+     |     |        +--ro min-time?   oc-types:timeticks64
+     |     |        +--ro max-time?   oc-types:timeticks64
+     |     +--rw ethernet
+     |     |  +--rw config
+     |     |  |  +--rw client-als?   enumeration
+     |     |  |  +--rw als-delay?    uint32
+     |     |  +--ro state
+     |     |  |  +--ro client-als?                        enumeration
+     |     |  |  +--ro als-delay?                         uint32
+     |     |  |  +--ro in-mac-control-frames?             oc-yang:counter64
+     |     |  |  +--ro in-mac-pause-frames?               oc-yang:counter64
+     |     |  |  +--ro in-oversize-frames?                oc-yang:counter64
+     |     |  |  +--ro in-undersize-frames?               oc-yang:counter64
+     |     |  |  +--ro in-jabber-frames?                  oc-yang:counter64
+     |     |  |  +--ro in-fragment-frames?                oc-yang:counter64
+     |     |  |  +--ro in-8021q-frames?                   oc-yang:counter64
+     |     |  |  +--ro in-crc-errors?                     oc-yang:counter64
+     |     |  |  +--ro in-block-errors?                   oc-yang:counter64
+     |     |  |  +--ro out-mac-control-frames?            oc-yang:counter64
+     |     |  |  +--ro out-mac-pause-frames?              oc-yang:counter64
+     |     |  |  +--ro out-8021q-frames?                  oc-yang:counter64
+     |     |  |  +--ro in-pcs-bip-errors?                 oc-yang:counter64
+     |     |  |  +--ro in-pcs-errored-seconds?            oc-yang:counter64
+     |     |  |  +--ro in-pcs-severely-errored-seconds?   oc-yang:counter64
+     |     |  |  +--ro in-pcs-unavailable-seconds?        oc-yang:counter64
+     |     |  |  +--ro out-pcs-bip-errors?                oc-yang:counter64
+     |     |  |  +--ro out-crc-errors?                    oc-yang:counter64
+     |     |  |  +--ro out-block-errors?                  oc-yang:counter64
+     |     |  +--rw lldp
+     |     |     +--rw config
+     |     |     |  +--rw enabled?    boolean
+     |     |     |  +--rw snooping?   boolean
+     |     |     +--ro state
+     |     |     |  +--ro enabled?    boolean
+     |     |     |  +--ro snooping?   boolean
+     |     |     |  +--ro counters
+     |     |     |     +--ro frame-in?          yang:counter64
+     |     |     |     +--ro frame-out?         yang:counter64
+     |     |     |     +--ro frame-error-in?    yang:counter64
+     |     |     |     +--ro frame-discard?     yang:counter64
+     |     |     |     +--ro tlv-discard?       yang:counter64
+     |     |     |     +--ro tlv-unknown?       yang:counter64
+     |     |     |     +--ro last-clear?        yang:date-and-time
+     |     |     |     +--ro frame-error-out?   yang:counter64
+     |     |     +--ro neighbors
+     |     |        +--ro neighbor* [id]
+     |     |           +--ro id             -> ../state/id
+     |     |           +--ro config
+     |     |           +--ro state
+     |     |           |  +--ro system-name?               string
+     |     |           |  +--ro system-description?        string
+     |     |           |  +--ro chassis-id?                string
+     |     |           |  +--ro chassis-id-type?           oc-lldp-types:chassis-id-type
+     |     |           |  +--ro id?                        string
+     |     |           |  +--ro age?                       uint64
+     |     |           |  +--ro last-update?               int64
+     |     |           |  +--ro ttl?                       uint16
+     |     |           |  +--ro port-id?                   string
+     |     |           |  +--ro port-id-type?              oc-lldp-types:port-id-type
+     |     |           |  +--ro port-description?          string
+     |     |           |  +--ro management-address?        string
+     |     |           |  +--ro management-address-type?   string
+     |     |           +--ro custom-tlvs
+     |     |              +--ro tlv* [type oui oui-subtype]
+     |     |                 +--ro type           -> ../state/type
+     |     |                 +--ro oui            -> ../state/oui
+     |     |                 +--ro oui-subtype    -> ../state/oui-subtype
+     |     |                 +--ro config
+     |     |                 +--ro state
+     |     |                    +--ro type?          int32
+     |     |                    +--ro oui?           string
+     |     |                    +--ro oui-subtype?   string
+     |     |                    +--ro value?         binary
+     |     +--rw ingress
+     |     |  +--rw config
+     |     |  |  +--rw transceiver?        -> /oc-platform:components/component/name
+     |     |  |  +--rw physical-channel*   -> /oc-platform:components/component/oc-transceiver:transceiver/physical-channels/channel/index
+     |     |  +--ro state
+     |     |     +--ro transceiver?        -> /oc-platform:components/component/name
+     |     |     +--ro physical-channel*   -> /oc-platform:components/component/oc-transceiver:transceiver/physical-channels/channel/index
+     |     +--rw logical-channel-assignments
+     |        +--rw assignment* [index]
+     |           +--rw index     -> ../config/index
+     |           +--rw config
+     |           |  +--rw index?                  uint32
+     |           |  +--rw description?            string
+     |           |  +--rw assignment-type?        enumeration
+     |           |  +--rw logical-channel?        -> /terminal-device/logical-channels/channel/index
+     |           |  +--rw optical-channel?        -> /oc-platform:components/component/name
+     |           |  +--rw allocation?             decimal64
+     |           |  +--rw tributary-slot-index?   int32
+     |           |  +--rw mapping?                identityref
+     |           +--ro state
+     |              +--ro index?                  uint32
+     |              +--ro description?            string
+     |              +--ro assignment-type?        enumeration
+     |              +--ro logical-channel?        -> /terminal-device/logical-channels/channel/index
+     |              +--ro optical-channel?        -> /oc-platform:components/component/name
+     |              +--ro allocation?             decimal64
+     |              +--ro tributary-slot-index?   int32
+     |              +--ro mapping?                identityref
+     +--rw operational-modes
+        +--ro mode* [mode-id]
+           +--ro mode-id    -> ../state/mode-id
+           +--ro config
+           +--ro state
+              +--ro mode-id?       uint16
+              +--ro description?   string
+              +--ro vendor-id?     string
+
+  augment /oc-platform:components/oc-platform:component:
+    +--rw optical-channel
+       +--rw config
+       |  +--rw frequency?             oc-opt-types:frequency-type
+       |  +--rw target-output-power?   decimal64
+       |  +--rw operational-mode?      uint16
+       |  +--rw line-port?             -> /oc-platform:components/component/name
+       +--ro state
+          +--ro frequency?                                   oc-opt-types:frequency-type
+          +--ro target-output-power?                         decimal64
+          +--ro operational-mode?                            uint16
+          +--ro line-port?                                   -> /oc-platform:components/component/name
+          +--ro group-id?                                    uint32
+          +--ro output-power
+          |  +--ro instant?    decimal64
+          |  +--ro avg?        decimal64
+          |  +--ro min?        decimal64
+          |  +--ro max?        decimal64
+          |  +--ro interval?   oc-types:stat-interval
+          |  +--ro min-time?   oc-types:timeticks64
+          |  +--ro max-time?   oc-types:timeticks64
+          +--ro input-power
+          |  +--ro instant?    decimal64
+          |  +--ro avg?        decimal64
+          |  +--ro min?        decimal64
+          |  +--ro max?        decimal64
+          |  +--ro interval?   oc-types:stat-interval
+          |  +--ro min-time?   oc-types:timeticks64
+          |  +--ro max-time?   oc-types:timeticks64
+          +--ro laser-bias-current
+          |  +--ro instant?    decimal64
+          |  +--ro avg?        decimal64
+          |  +--ro min?        decimal64
+          |  +--ro max?        decimal64
+          |  +--ro interval?   oc-types:stat-interval
+          |  +--ro min-time?   oc-types:timeticks64
+          |  +--ro max-time?   oc-types:timeticks64
+          +--ro chromatic-dispersion
+          |  +--ro instant?    decimal64
+          |  +--ro avg?        decimal64
+          |  +--ro min?        decimal64
+          |  +--ro max?        decimal64
+          |  +--ro interval?   oc-types:stat-interval
+          |  +--ro min-time?   oc-types:timeticks64
+          |  +--ro max-time?   oc-types:timeticks64
+          +--ro polarization-mode-dispersion
+          |  +--ro instant?    decimal64
+          |  +--ro avg?        decimal64
+          |  +--ro min?        decimal64
+          |  +--ro max?        decimal64
+          |  +--ro interval?   oc-types:stat-interval
+          |  +--ro min-time?   oc-types:timeticks64
+          |  +--ro max-time?   oc-types:timeticks64
+          +--ro second-order-polarization-mode-dispersion
+          |  +--ro instant?    decimal64
+          |  +--ro avg?        decimal64
+          |  +--ro min?        decimal64
+          |  +--ro max?        decimal64
+          |  +--ro interval?   oc-types:stat-interval
+          |  +--ro min-time?   oc-types:timeticks64
+          |  +--ro max-time?   oc-types:timeticks64
+          +--ro polarization-dependent-loss
+             +--ro instant?    decimal64
+             +--ro avg?        decimal64
+             +--ro min?        decimal64
+             +--ro max?        decimal64
+             +--ro interval?   oc-types:stat-interval
+             +--ro min-time?   oc-types:timeticks64
+             +--ro max-time?   oc-types:timeticks64
+
+module: openconfig-transport-line-common
+  augment /oc-platform:components/oc-platform:component/oc-platform:port:
+    +--rw optical-port
+       +--rw config
+       |  +--rw admin-state?   oc-opt-types:admin-state-type
+       +--ro state
+          +--ro admin-state?         oc-opt-types:admin-state-type
+          +--ro optical-port-type?   identityref
+          +--ro tilt?                decimal64
+          +--ro input-power
+          |  +--ro instant?    decimal64
+          |  +--ro avg?        decimal64
+          |  +--ro min?        decimal64
+          |  +--ro max?        decimal64
+          |  +--ro interval?   oc-types:stat-interval
+          |  +--ro min-time?   oc-types:timeticks64
+          |  +--ro max-time?   oc-types:timeticks64
+          +--ro output-power
+             +--ro instant?    decimal64
+             +--ro avg?        decimal64
+             +--ro min?        decimal64
+             +--ro max?        decimal64
+             +--ro interval?   oc-types:stat-interval
+             +--ro min-time?   oc-types:timeticks64
+             +--ro max-time?   oc-types:timeticks64
+  augment /oc-if:interfaces/oc-if:interface:
+    +--rw sonet
+module: openconfig-transport-line-connectivity
+  +--rw connections
+     +--rw connection* [index]
+        +--rw index     -> ../config/index
+        +--rw config
+        |  +--rw index?        uint32
+        |  +--rw source?       union
+        |  +--rw dest?         union
+        |  +--rw fiber-type?   identityref
+        +--ro state
+           +--ro index?        uint32
+           +--ro source?       union
+           +--ro dest?         union
+           +--ro fiber-type?   identityref
+module: openconfig-transport-line-protection
+  +--rw aps
+     +--rw aps-modules
+        +--rw aps-module* [name]
+           +--rw name      -> ../config/name
+           +--rw config
+           |  +--rw name?                               -> /oc-platform:components/component/name
+           |  +--rw revertive?                          boolean
+           |  +--rw wait-to-restore-time?               uint32
+           |  +--rw hold-off-time?                      uint32
+           |  +--rw primary-switch-threshold?           decimal64
+           |  +--rw primary-switch-hysteresis?          decimal64
+           |  +--rw secondary-switch-threshold?         decimal64
+           |  +--rw relative-switch-threshold?          decimal64
+           |  +--rw relative-switch-threshold-offset?   decimal64
+           |  +--rw force-to-port?                      enumeration
+           +--ro state
+           |  +--ro name?                               -> /oc-platform:components/component/name
+           |  +--ro revertive?                          boolean
+           |  +--ro wait-to-restore-time?               uint32
+           |  +--ro hold-off-time?                      uint32
+           |  +--ro primary-switch-threshold?           decimal64
+           |  +--ro primary-switch-hysteresis?          decimal64
+           |  +--ro secondary-switch-threshold?         decimal64
+           |  +--ro relative-switch-threshold?          decimal64
+           |  +--ro relative-switch-threshold-offset?   decimal64
+           |  +--ro force-to-port?                      enumeration
+           |  +--ro active-path?                        identityref
+           +--rw ports
+              +--rw line-primary-in
+              |  +--rw config
+              |  |  +--rw enabled?              boolean
+              |  |  +--rw target-attenuation?   decimal64
+              |  +--ro state
+              |     +--ro enabled?              boolean
+              |     +--ro target-attenuation?   decimal64
+              |     +--ro attenuation?          decimal64
+              |     +--ro optical-power
+              |        +--ro instant?    decimal64
+              |        +--ro avg?        decimal64
+              |        +--ro min?        decimal64
+              |        +--ro max?        decimal64
+              |        +--ro interval?   oc-types:stat-interval
+              |        +--ro min-time?   oc-types:timeticks64
+              |        +--ro max-time?   oc-types:timeticks64
+              +--rw line-primary-out
+              |  +--rw config
+              |  |  +--rw target-attenuation?   decimal64
+              |  +--ro state
+              |     +--ro target-attenuation?   decimal64
+              |     +--ro attenuation?          decimal64
+              |     +--ro optical-power
+              |        +--ro instant?    decimal64
+              |        +--ro avg?        decimal64
+              |        +--ro min?        decimal64
+              |        +--ro max?        decimal64
+              |        +--ro interval?   oc-types:stat-interval
+              |        +--ro min-time?   oc-types:timeticks64
+              |        +--ro max-time?   oc-types:timeticks64
+              +--rw line-secondary-in
+              |  +--rw config
+              |  |  +--rw enabled?              boolean
+              |  |  +--rw target-attenuation?   decimal64
+              |  +--ro state
+              |     +--ro enabled?              boolean
+              |     +--ro target-attenuation?   decimal64
+              |     +--ro attenuation?          decimal64
+              |     +--ro optical-power
+              |        +--ro instant?    decimal64
+              |        +--ro avg?        decimal64
+              |        +--ro min?        decimal64
+              |        +--ro max?        decimal64
+              |        +--ro interval?   oc-types:stat-interval
+              |        +--ro min-time?   oc-types:timeticks64
+              |        +--ro max-time?   oc-types:timeticks64
+              +--rw line-secondary-out
+              |  +--rw config
+              |  |  +--rw target-attenuation?   decimal64
+              |  +--ro state
+              |     +--ro target-attenuation?   decimal64
+              |     +--ro attenuation?          decimal64
+              |     +--ro optical-power
+              |        +--ro instant?    decimal64
+              |        +--ro avg?        decimal64
+              |        +--ro min?        decimal64
+              |        +--ro max?        decimal64
+              |        +--ro interval?   oc-types:stat-interval
+              |        +--ro min-time?   oc-types:timeticks64
+              |        +--ro max-time?   oc-types:timeticks64
+              +--rw common-in
+              |  +--rw config
+              |  |  +--rw enabled?              boolean
+              |  |  +--rw target-attenuation?   decimal64
+              |  +--ro state
+              |     +--ro enabled?              boolean
+              |     +--ro target-attenuation?   decimal64
+              |     +--ro attenuation?          decimal64
+              |     +--ro optical-power
+              |        +--ro instant?    decimal64
+              |        +--ro avg?        decimal64
+              |        +--ro min?        decimal64
+              |        +--ro max?        decimal64
+              |        +--ro interval?   oc-types:stat-interval
+              |        +--ro min-time?   oc-types:timeticks64
+              |        +--ro max-time?   oc-types:timeticks64
+              +--rw common-output
+                 +--rw config
+                 |  +--rw target-attenuation?   decimal64
+                 +--ro state
+                    +--ro target-attenuation?   decimal64
+                    +--ro attenuation?          decimal64
+                    +--ro optical-power
+                       +--ro instant?    decimal64
+                       +--ro avg?        decimal64
+                       +--ro min?        decimal64
+                       +--ro max?        decimal64
+                       +--ro interval?   oc-types:stat-interval
+                       +--ro min-time?   oc-types:timeticks64
+                       +--ro max-time?   oc-types:timeticks64
+module: openconfig-wavelength-router
+  +--rw wavelength-router
+     +--rw media-channels
+     |  +--rw channel* [index]
+     |     +--rw index                     -> ../config/index
+     |     +--rw config
+     |     |  +--rw index?                     uint32
+     |     |  +--rw name?                      string
+     |     |  +--rw lower-frequency?           oc-opt-types:frequency-type
+     |     |  +--rw upper-frequency?           oc-opt-types:frequency-type
+     |     |  +--rw admin-status?              oc-opt-types:admin-state-type
+     |     |  +--rw super-channel?             boolean
+     |     |  +--rw super-channel-parent?      -> ../../../channel/config/index
+     |     |  +--rw ase-control-mode?          identityref
+     |     |  +--rw ase-injection-threshold?   decimal64
+     |     +--ro state
+     |     |  +--ro index?                     uint32
+     |     |  +--ro name?                      string
+     |     |  +--ro lower-frequency?           oc-opt-types:frequency-type
+     |     |  +--ro upper-frequency?           oc-opt-types:frequency-type
+     |     |  +--ro admin-status?              oc-opt-types:admin-state-type
+     |     |  +--ro super-channel?             boolean
+     |     |  +--ro super-channel-parent?      -> ../../../channel/config/index
+     |     |  +--ro ase-control-mode?          identityref
+     |     |  +--ro ase-injection-threshold?   decimal64
+     |     |  +--ro oper-status?               enumeration
+     |     |  +--ro ase-status?                enumeration
+     |     +--rw source
+     |     |  +--rw config
+     |     |  |  +--rw port-name?   -> /oc-platform:components/component/name
+     |     |  +--ro state
+     |     |     +--ro port-name?   -> /oc-platform:components/component/name
+     |     +--rw dest
+     |     |  +--rw config
+     |     |  |  +--rw port-name?   -> /oc-platform:components/component/name
+     |     |  +--ro state
+     |     |     +--ro port-name?   -> /oc-platform:components/component/name
+     |     +--rw spectrum-power-profile
+     |        +--rw distribution* [lower-frequency upper-frequency]
+     |           +--rw lower-frequency    -> ../config/lower-frequency
+     |           +--rw upper-frequency    -> ../config/upper-frequency
+     |           +--rw config
+     |           |  +--rw lower-frequency?   oc-opt-types:frequency-type
+     |           |  +--rw upper-frequency?   oc-opt-types:frequency-type
+     |           |  +--rw target-power?      decimal64
+     |           +--ro state
+     |              +--ro lower-frequency?   oc-opt-types:frequency-type
+     |              +--ro upper-frequency?   oc-opt-types:frequency-type
+     |              +--ro target-power?      decimal64
+     +--rw port-spectrum-power-profiles
+        +--rw port* [name]
+           +--rw name                      -> ../config/name
+           +--rw config
+           |  +--rw name?   -> /oc-platform:components/component/name
+           +--ro state
+           |  +--ro name?   -> /oc-platform:components/component/name
+           +--rw spectrum-power-profile
+              +--rw distribution* [lower-frequency upper-frequency]
+                 +--rw lower-frequency    -> ../config/lower-frequency
+                 +--rw upper-frequency    -> ../config/upper-frequency
+                 +--rw config
+                 |  +--rw lower-frequency?   oc-opt-types:frequency-type
+                 |  +--rw upper-frequency?   oc-opt-types:frequency-type
+                 |  +--rw target-power?      decimal64
+                 +--ro state
+                    +--ro lower-frequency?   oc-opt-types:frequency-type
+                    +--ro upper-frequency?   oc-opt-types:frequency-type
+                    +--ro target-power?      decimal64
