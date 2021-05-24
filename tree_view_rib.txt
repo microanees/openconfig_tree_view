@@ -1,5 +1,5 @@
-
 module: openconfig-rib-bgp-ext
+
   augment /oc-ni:network-instances/oc-ni:network-instance/oc-ni:protocols/oc-ni:protocol/oc-ni:bgp/oc-ni:rib/oc-ni:afi-safis/oc-ni:afi-safi/oc-ni:ipv4-unicast/oc-ni:loc-rib/oc-ni:routes/oc-ni:route/oc-ni:state:
     +--ro reject-reason?   union
   augment /oc-ni:network-instances/oc-ni:network-instance/oc-ni:protocols/oc-ni:protocol/oc-ni:bgp/oc-ni:rib/oc-ni:afi-safis/oc-ni:afi-safi/oc-ni:ipv6-unicast/oc-ni:loc-rib/oc-ni:routes/oc-ni:route/oc-ni:state:
@@ -20,3 +20,4 @@ module: openconfig-rib-bgp-ext
     +--ro reject-reason?   union
   augment /oc-ni:network-instances/oc-ni:network-instance/oc-ni:protocols/oc-ni:protocol/oc-ni:bgp/oc-ni:rib/oc-ni:afi-safis/oc-ni:afi-safi/oc-ni:ipv6-unicast/oc-ni:neighbors/oc-ni:neighbor/oc-ni:adj-rib-out-post/oc-ni:routes/oc-ni:route/oc-ni:state:
     +--ro reject-reason?   union
+

@@ -77,20 +77,20 @@ module: openconfig-macsec
            |     +--ro rx-nosci-pkts?        oc-yang:counter64
            +--ro scsa-tx
            |  +--ro scsa-tx* [sci-tx]
-           |     +--ro sci-tx    -> ../state/counters/sci-tx
+           |     +--ro sci-tx    -> ../state/sci-tx
            |     +--ro state
+           |        +--ro sci-tx?     oc-yang:hex-string
            |        +--ro counters
-           |           +--ro sci-tx?         oc-yang:hex-string
            |           +--ro sc-auth-only?   oc-yang:counter64
            |           +--ro sc-encrypted?   oc-yang:counter64
            |           +--ro sa-auth-only?   oc-yang:counter64
            |           +--ro sa-encrypted?   oc-yang:counter64
            +--ro scsa-rx
            |  +--ro scsa-rx* [sci-rx]
-           |     +--ro sci-rx    -> ../state/counters/sci-rx
+           |     +--ro sci-rx    -> ../state/sci-rx
            |     +--ro state
+           |        +--ro sci-rx?     oc-yang:hex-string
            |        +--ro counters
-           |           +--ro sci-rx?       oc-yang:hex-string
            |           +--ro sc-invalid?   oc-yang:counter64
            |           +--ro sc-valid?     oc-yang:counter64
            |           +--ro sa-invalid?   oc-yang:counter64

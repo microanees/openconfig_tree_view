@@ -1,5 +1,5 @@
-
 module: openconfig-rsvp-sr-ext
+
   augment /oc-ni:network-instances/oc-ni:network-instance/oc-ni:mpls/oc-ni:te-global-attributes:
     +--rw bandwidth-measurement
        +--rw config
@@ -33,3 +33,4 @@ module: openconfig-rsvp-sr-ext
           +--ro last-calculated-time?             oc-types:timeticks64
           +--ro last-calculated-sr-utilisation?   uint64
           +--ro last-flooded-time?                oc-types:timeticks64
+

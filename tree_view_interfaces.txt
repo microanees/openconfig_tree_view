@@ -1,5 +1,18 @@
+module: openconfig-if-8021x
+
+  augment /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-vlan:switched-vlan:
+    +--rw dot1x-vlan-map
+       +--rw vlan-name* [vlan-name]
+          +--rw vlan-name    -> ../config/vlan-name
+          +--rw config
+          |  +--rw vlan-name    string
+          |  +--rw id           oc-vlan-types:vlan-id
+          +--ro state
+             +--ro vlan-name    string
+             +--ro id           oc-vlan-types:vlan-id
 
 module: openconfig-if-ip
+
   augment /oc-if:interfaces/oc-if:interface/oc-vlan:routed-vlan:
     +--rw ipv4
        +--rw addresses
@@ -185,30 +198,34 @@ module: openconfig-if-ip
              +--ro out-forwarded-pkts?     oc-yang:counter64
              +--ro out-forwarded-octets?   oc-yang:counter64
              +--ro out-discarded-pkts?     oc-yang:counter64
+
 module: openconfig-interfaces
   +--rw interfaces
      +--rw interface* [name]
         +--rw name                   -> ../config/name
         +--rw config
-        |  +--rw name?            string
-        |  +--rw type             identityref
-        |  +--rw mtu?             uint16
-        |  +--rw loopback-mode?   boolean
-        |  +--rw description?     string
-        |  +--rw enabled?         boolean
-        |  +--rw oc-vlan:tpid?    identityref
+        |  +--rw name?                          string
+        |  +--rw type                           identityref
+        |  +--rw mtu?                           uint16
+        |  +--rw loopback-mode?                 boolean
+        |  +--rw description?                   string
+        |  +--rw enabled?                       boolean
+        |  +--rw oc-vlan:tpid?                  identityref
+        |  +--rw oc-if-sdn:forwarding-viable?   boolean
         +--ro state
-        |  +--ro name?            string
-        |  +--ro type             identityref
-        |  +--ro mtu?             uint16
-        |  +--ro loopback-mode?   boolean
-        |  +--ro description?     string
-        |  +--ro enabled?         boolean
-        |  +--ro ifindex?         uint32
-        |  +--ro admin-status     enumeration
-        |  +--ro oper-status      enumeration
-        |  +--ro last-change?     oc-types:timeticks64
-        |  +--ro logical?         boolean
+        |  +--ro name?                          string
+        |  +--ro type                           identityref
+        |  +--ro mtu?                           uint16
+        |  +--ro loopback-mode?                 boolean
+        |  +--ro description?                   string
+        |  +--ro enabled?                       boolean
+        |  +--ro ifindex?                       uint32
+        |  +--ro admin-status                   enumeration
+        |  +--ro oper-status                    enumeration
+        |  +--ro last-change?                   oc-types:timeticks64
+        |  +--ro logical?                       boolean
+        |  +--ro management?                    boolean
+        |  +--ro cpu?                           boolean
         |  +--ro counters
         |  |  +--ro in-octets?             oc-yang:counter64
         |  |  +--ro in-pkts?               oc-yang:counter64
@@ -228,7 +245,8 @@ module: openconfig-interfaces
         |  |  +--ro out-errors?            oc-yang:counter64
         |  |  +--ro carrier-transitions?   oc-yang:counter64
         |  |  +--ro last-clear?            oc-types:timeticks64
-        |  +--ro oc-vlan:tpid?    identityref
+        |  +--ro oc-vlan:tpid?                  identityref
+        |  +--ro oc-if-sdn:forwarding-viable?   boolean
         +--rw hold-time
         |  +--rw config
         |  |  +--rw up?     uint32
@@ -253,6 +271,8 @@ module: openconfig-interfaces
         |     |  +--ro oper-status     enumeration
         |     |  +--ro last-change?    oc-types:timeticks64
         |     |  +--ro logical?        boolean
+        |     |  +--ro management?     boolean
+        |     |  +--ro cpu?            boolean
         |     |  +--ro counters
         |     |     +--ro in-octets?             oc-yang:counter64
         |     |     +--ro in-pkts?               oc-yang:counter64
@@ -584,9 +604,17 @@ module: openconfig-interfaces
         |  |  |  +--ro oc-eth:in-8021q-frames?          oc-yang:counter64
         |  |  |  +--ro oc-eth:in-crc-errors?            oc-yang:counter64
         |  |  |  +--ro oc-eth:in-block-errors?          oc-yang:counter64
+        |  |  |  +--ro oc-eth:in-carrier-errors?        oc-yang:counter64
+        |  |  |  +--ro oc-eth:in-interrupted-tx?        oc-yang:counter64
+        |  |  |  +--ro oc-eth:in-late-collision?        oc-yang:counter64
+        |  |  |  +--ro oc-eth:in-mac-errors-rx?         oc-yang:counter64
+        |  |  |  +--ro oc-eth:in-single-collision?      oc-yang:counter64
+        |  |  |  +--ro oc-eth:in-symbol-error?          oc-yang:counter64
+        |  |  |  +--ro oc-eth:in-maxsize-exceeded?      oc-yang:counter64
         |  |  |  +--ro oc-eth:out-mac-control-frames?   oc-yang:counter64
         |  |  |  +--ro oc-eth:out-mac-pause-frames?     oc-yang:counter64
         |  |  |  +--ro oc-eth:out-8021q-frames?         oc-yang:counter64
+        |  |  |  +--ro oc-eth:out-mac-errors-tx?        oc-yang:counter64
         |  |  |  +--ro oc-eth-ext:in-distribution
         |  |  |     +--ro oc-eth-ext:in-frames-64-octets?          oc-yang:counter64
         |  |  |     +--ro oc-eth-ext:in-frames-65-127-octets?      oc-yang:counter64
@@ -602,10 +630,45 @@ module: openconfig-interfaces
         |  |  |  +--rw oc-vlan:access-vlan?      oc-vlan-types:vlan-id
         |  |  |  +--rw oc-vlan:trunk-vlans*      union
         |  |  +--ro oc-vlan:state
-        |  |     +--ro oc-vlan:interface-mode?   oc-vlan-types:vlan-mode-type
-        |  |     +--ro oc-vlan:native-vlan?      oc-vlan-types:vlan-id
-        |  |     +--ro oc-vlan:access-vlan?      oc-vlan-types:vlan-id
-        |  |     +--ro oc-vlan:trunk-vlans*      union
+        |  |  |  +--ro oc-vlan:interface-mode?   oc-vlan-types:vlan-mode-type
+        |  |  |  +--ro oc-vlan:native-vlan?      oc-vlan-types:vlan-id
+        |  |  |  +--ro oc-vlan:access-vlan?      oc-vlan-types:vlan-id
+        |  |  |  +--ro oc-vlan:trunk-vlans*      union
+        |  |  +--rw oc-1x:dot1x-vlan-map
+        |  |     +--rw oc-1x:vlan-name* [vlan-name]
+        |  |        +--rw oc-1x:vlan-name    -> ../config/vlan-name
+        |  |        +--rw oc-1x:config
+        |  |        |  +--rw oc-1x:vlan-name    string
+        |  |        |  +--rw oc-1x:id           oc-vlan-types:vlan-id
+        |  |        +--ro oc-1x:state
+        |  |           +--ro oc-1x:vlan-name    string
+        |  |           +--ro oc-1x:id           oc-vlan-types:vlan-id
+        |  +--rw oc-1x:dot1x
+        |  |  +--rw oc-1x:config
+        |  |  |  +--rw oc-1x:authenticate-port?         boolean
+        |  |  |  +--rw oc-1x:host-mode?                 enumeration
+        |  |  |  +--rw oc-1x:reauthenticate-interval?   uint16
+        |  |  |  +--rw oc-1x:retransmit-interval?       uint16
+        |  |  |  +--rw oc-1x:supplicant-timeout?        uint16
+        |  |  |  +--rw oc-1x:max-requests?              uint16
+        |  |  |  +--rw oc-1x:server-fail-vlan?          union
+        |  |  |  +--rw oc-1x:auth-fail-vlan?            union
+        |  |  +--ro oc-1x:state
+        |  |     +--ro oc-1x:authenticate-port?         boolean
+        |  |     +--ro oc-1x:host-mode?                 enumeration
+        |  |     +--ro oc-1x:reauthenticate-interval?   uint16
+        |  |     +--ro oc-1x:retransmit-interval?       uint16
+        |  |     +--ro oc-1x:supplicant-timeout?        uint16
+        |  |     +--ro oc-1x:max-requests?              uint16
+        |  |     +--ro oc-1x:server-fail-vlan?          union
+        |  |     +--ro oc-1x:auth-fail-vlan?            union
+        |  +--rw oc-1x:authenticated-sessions
+        |  |  +--ro oc-1x:authenticated-session* [mac]
+        |  |     +--ro oc-1x:mac      -> ../state/mac
+        |  |     +--ro oc-1x:state
+        |  |        +--ro oc-1x:mac?          oc-yang:mac-address
+        |  |        +--ro oc-1x:session-id?   string
+        |  |        +--ro oc-1x:status?       enumeration
         |  +--rw oc-poe:poe
         |     +--rw oc-poe:config
         |     |  +--rw oc-poe:enabled?   boolean

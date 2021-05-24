@@ -1,5 +1,5 @@
-
 module: openconfig-isis-policy
+
   augment /rpol:routing-policy/rpol:policy-definitions/rpol:policy-definition/rpol:statements/rpol:statement/rpol:actions:
     +--rw isis-actions
        +--rw config
@@ -16,3 +16,4 @@ module: openconfig-isis-policy
        |  +--rw level-eq?   isis-types:level-number
        +--ro state
           +--ro level-eq?   isis-types:level-number
+

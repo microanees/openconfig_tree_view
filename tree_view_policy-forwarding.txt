@@ -1,5 +1,5 @@
-
 module: openconfig-pf-srte
+
   augment /oc-ni:network-instances/oc-ni:network-instance/oc-ni:policy-forwarding/oc-ni:policies/oc-ni:policy/oc-ni:rules/oc-ni:rule:
     +--rw srte
        +--rw config
@@ -27,11 +27,12 @@ module: openconfig-pf-srte
                 +--rw index     -> ../config/index
                 +--rw config
                 |  +--rw index?      uint64
-                |  +--rw value?      oc-sr:sr-sid-type
+                |  +--rw value?      oc-srt:sr-sid-type
                 |  +--rw mpls-ttl?   uint8
                 |  +--rw mpls-tc?    uint8
                 +--ro state
                    +--ro index?      uint64
-                   +--ro value?      oc-sr:sr-sid-type
+                   +--ro value?      oc-srt:sr-sid-type
                    +--ro mpls-ttl?   uint8
                    +--ro mpls-tc?    uint8
+

@@ -1,8 +1,9 @@
-
 module: openconfig-aft-network-instance
+
   augment /oc-ni:network-instances/oc-ni:network-instance/oc-ni:afts/oc-ni:next-hops/oc-ni:next-hop/oc-ni:state:
     +--ro network-instance?   oc-ni:network-instance-ref
   augment /oc-ni:network-instances/oc-ni:network-instance/oc-ni:afts/oc-ni:ipv4-unicast/oc-ni:ipv4-entry/oc-ni:state:
     +--ro origin-network-instance?   oc-ni:network-instance-ref
   augment /oc-ni:network-instances/oc-ni:network-instance/oc-ni:afts/oc-ni:ipv6-unicast/oc-ni:ipv6-entry/oc-ni:state:
     +--ro origin-network-instance?   oc-ni:network-instance-ref
+

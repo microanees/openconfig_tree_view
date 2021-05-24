@@ -87,25 +87,3 @@ module: openconfig-bfd
                        +--ro transmitted-packets?       uint64
                        +--ro received-packets?          uint64
                        +--ro up-transitions?            uint64
-
-  augment /oc-ni:network-instances/oc-ni:network-instance/oc-ni:protocols/oc-ni:protocol/oc-ni:bgp/oc-ni:neighbors/oc-ni:neighbor:
-    +--rw enable-bfd
-       +--rw config
-       |  +--rw enabled?   boolean
-       +--ro state
-          +--ro enabled?              boolean
-          +--ro associated-session?   -> /bfd/interfaces/interface/peers/peer/local-discriminator
-  augment /oc-ni:network-instances/oc-ni:network-instance/oc-ni:protocols/oc-ni:protocol/oc-ni:bgp/oc-ni:peer-groups/oc-ni:peer-group:
-    +--rw enable-bfd
-       +--rw config
-       |  +--rw enabled?   boolean
-       +--ro state
-          +--ro enabled?              boolean
-          +--ro associated-session?   -> /bfd/interfaces/interface/peers/peer/local-discriminator
-  augment /oc-ni:network-instances/oc-ni:network-instance/oc-ni:protocols/oc-ni:protocol/oc-ni:static-routes/oc-ni:static/oc-ni:next-hops/oc-ni:next-hop:
-    +--rw enable-bfd
-       +--rw config
-       |  +--rw enabled?   boolean
-       +--ro state
-          +--ro enabled?              boolean
-          +--ro associated-session?   -> /bfd/interfaces/interface/peers/peer/local-discriminator

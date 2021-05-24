@@ -91,4 +91,19 @@ module: openconfig-routing-policy
                     +--rw config
                     |  +--rw policy-result?   policy-result-type
                     +--ro state
-                       +--ro policy-result?   policy-result-type
+                    |  +--ro policy-result?   policy-result-type
+                    +--rw set-tag
+                       +--rw config
+                       |  +--rw mode?   enumeration
+                       +--ro state
+                       |  +--ro mode?   enumeration
+                       +--rw inline
+                       |  +--rw config
+                       |  |  +--rw tag*   oc-pol-types:tag-type
+                       |  +--ro state
+                       |     +--ro tag*   oc-pol-types:tag-type
+                       +--rw reference
+                          +--rw config
+                          |  +--rw tag-set?   -> ../../../../../../../../../defined-sets/tag-sets/tag-set/config/name
+                          +--ro state
+                             +--ro tag-set?   -> ../../../../../../../../../defined-sets/tag-sets/tag-set/config/name

@@ -1,0 +1,38 @@
+module: openconfig-sampling-sflow
+  +--rw sampling
+     +--rw sflow
+        +--rw config
+        |  +--rw enabled?          boolean
+        |  +--rw source-address?   oc-inet:ip-address
+        |  +--rw sampling-rate?    uint32
+        |  +--rw sample-size?      uint16
+        +--ro state
+        |  +--ro enabled?          boolean
+        |  +--ro source-address?   oc-inet:ip-address
+        |  +--ro sampling-rate?    uint32
+        |  +--ro sample-size?      uint16
+        +--rw collectors
+        |  +--rw collector* [address port]
+        |     +--rw address    -> ../config/address
+        |     +--rw port       -> ../config/port
+        |     +--rw config
+        |     |  +--rw address?            oc-inet:ip-address
+        |     |  +--rw port?               oc-inet:port-number
+        |     |  +--rw network-instance?   oc-netinst:network-instance-ref
+        |     +--ro state
+        |        +--ro address?            oc-inet:ip-address
+        |        +--ro port?               oc-inet:port-number
+        |        +--ro network-instance?   oc-netinst:network-instance-ref
+        |        +--ro packets-sent?       oc-yang:counter64
+        +--rw interfaces
+           +--rw interface* [name]
+              +--rw name      -> ../config/name
+              +--rw config
+              |  +--rw name?            oc-if:base-interface-ref
+              |  +--rw enabled?         boolean
+              |  +--rw sampling-rate?   uint32
+              +--ro state
+                 +--ro name?              oc-if:base-interface-ref
+                 +--ro enabled?           boolean
+                 +--ro sampling-rate?     uint32
+                 +--ro packets-sampled?   oc-yang:counter64

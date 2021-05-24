@@ -1,5 +1,5 @@
-
 module: openconfig-bgp-policy
+
   augment /oc-rpol:routing-policy/oc-rpol:defined-sets:
     +--rw bgp-defined-sets
        +--rw community-sets
@@ -127,6 +127,7 @@ module: openconfig-bgp-policy
              |  +--rw ext-community-set-ref?   -> /oc-rpol:routing-policy/defined-sets/oc-bgp-pol:bgp-defined-sets/ext-community-sets/ext-community-set/ext-community-set-name
              +--ro state
                 +--ro ext-community-set-ref?   -> /oc-rpol:routing-policy/defined-sets/oc-bgp-pol:bgp-defined-sets/ext-community-sets/ext-community-set/ext-community-set-name
+
 module: openconfig-bgp
   +--rw bgp
      +--rw global
@@ -560,211 +561,216 @@ module: openconfig-bgp
      |     |     +--ro export-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
      |     |     +--ro default-export-policy?   default-policy-type
      |     +--rw afi-safis
-     |        +--rw afi-safi* [afi-safi-name]
-     |           +--rw afi-safi-name           -> ../config/afi-safi-name
-     |           +--rw config
-     |           |  +--rw afi-safi-name?   identityref
-     |           |  +--rw enabled?         boolean
-     |           +--ro state
-     |           |  +--ro afi-safi-name?   identityref
-     |           |  +--ro enabled?         boolean
-     |           |  +--ro active?          boolean
-     |           |  +--ro prefixes
-     |           |     +--ro received?              uint32
-     |           |     +--ro received-pre-policy?   uint32
-     |           |     +--ro sent?                  uint32
-     |           |     +--ro installed?             uint32
-     |           +--rw graceful-restart
-     |           |  +--rw config
-     |           |  |  +--rw enabled?   boolean
-     |           |  +--ro state
-     |           |     +--ro enabled?      boolean
-     |           |     +--ro received?     boolean
-     |           |     +--ro advertised?   boolean
-     |           +--rw add-paths
-     |           |  +--rw config
-     |           |  |  +--rw receive?                  boolean
-     |           |  |  +--rw send?                     boolean
-     |           |  |  +--rw send-max?                 uint8
-     |           |  |  +--rw eligible-prefix-policy?   -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
-     |           |  +--ro state
-     |           |     +--ro receive?                  boolean
-     |           |     +--ro send?                     boolean
-     |           |     +--ro send-max?                 uint8
-     |           |     +--ro eligible-prefix-policy?   -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
-     |           +--rw apply-policy
-     |           |  +--rw config
-     |           |  |  +--rw import-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
-     |           |  |  +--rw default-import-policy?   default-policy-type
-     |           |  |  +--rw export-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
-     |           |  |  +--rw default-export-policy?   default-policy-type
-     |           |  +--ro state
-     |           |     +--ro import-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
-     |           |     +--ro default-import-policy?   default-policy-type
-     |           |     +--ro export-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
-     |           |     +--ro default-export-policy?   default-policy-type
-     |           +--rw ipv4-unicast
-     |           |  +--rw prefix-limit
-     |           |  |  +--rw config
-     |           |  |  |  +--rw max-prefixes?            uint32
-     |           |  |  |  +--rw prevent-teardown?        boolean
-     |           |  |  |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |  |  |  +--rw restart-timer?           decimal64
-     |           |  |  +--ro state
-     |           |  |     +--ro max-prefixes?            uint32
-     |           |  |     +--ro prevent-teardown?        boolean
-     |           |  |     +--ro warning-threshold-pct?   oc-types:percentage
-     |           |  |     +--ro restart-timer?           decimal64
-     |           |  +--rw config
-     |           |  |  +--rw send-default-route?   boolean
-     |           |  +--ro state
-     |           |     +--ro send-default-route?   boolean
-     |           +--rw ipv6-unicast
-     |           |  +--rw prefix-limit
-     |           |  |  +--rw config
-     |           |  |  |  +--rw max-prefixes?            uint32
-     |           |  |  |  +--rw prevent-teardown?        boolean
-     |           |  |  |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |  |  |  +--rw restart-timer?           decimal64
-     |           |  |  +--ro state
-     |           |  |     +--ro max-prefixes?            uint32
-     |           |  |     +--ro prevent-teardown?        boolean
-     |           |  |     +--ro warning-threshold-pct?   oc-types:percentage
-     |           |  |     +--ro restart-timer?           decimal64
-     |           |  +--rw config
-     |           |  |  +--rw send-default-route?   boolean
-     |           |  +--ro state
-     |           |     +--ro send-default-route?   boolean
-     |           +--rw ipv4-labeled-unicast
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw ipv6-labeled-unicast
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw l3vpn-ipv4-unicast
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw l3vpn-ipv6-unicast
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw l3vpn-ipv4-multicast
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw l3vpn-ipv6-multicast
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw l2vpn-vpls
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw l2vpn-evpn
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw srte-policy-ipv4
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw srte-policy-ipv6
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw use-multiple-paths
-     |              +--rw config
-     |              |  +--rw enabled?   boolean
-     |              +--ro state
-     |              |  +--ro enabled?   boolean
-     |              +--rw ebgp
-     |                 +--rw config
-     |                 |  +--rw allow-multiple-as?   boolean
-     |                 +--ro state
-     |                    +--ro allow-multiple-as?   boolean
+     |     |  +--rw afi-safi* [afi-safi-name]
+     |     |     +--rw afi-safi-name           -> ../config/afi-safi-name
+     |     |     +--rw config
+     |     |     |  +--rw afi-safi-name?   identityref
+     |     |     |  +--rw enabled?         boolean
+     |     |     +--ro state
+     |     |     |  +--ro afi-safi-name?   identityref
+     |     |     |  +--ro enabled?         boolean
+     |     |     |  +--ro active?          boolean
+     |     |     |  +--ro prefixes
+     |     |     |     +--ro received?              uint32
+     |     |     |     +--ro received-pre-policy?   uint32
+     |     |     |     +--ro sent?                  uint32
+     |     |     |     +--ro installed?             uint32
+     |     |     +--rw graceful-restart
+     |     |     |  +--rw config
+     |     |     |  |  +--rw enabled?   boolean
+     |     |     |  +--ro state
+     |     |     |     +--ro enabled?      boolean
+     |     |     |     +--ro received?     boolean
+     |     |     |     +--ro advertised?   boolean
+     |     |     +--rw add-paths
+     |     |     |  +--rw config
+     |     |     |  |  +--rw receive?                  boolean
+     |     |     |  |  +--rw send?                     boolean
+     |     |     |  |  +--rw send-max?                 uint8
+     |     |     |  |  +--rw eligible-prefix-policy?   -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
+     |     |     |  +--ro state
+     |     |     |     +--ro receive?                  boolean
+     |     |     |     +--ro send?                     boolean
+     |     |     |     +--ro send-max?                 uint8
+     |     |     |     +--ro eligible-prefix-policy?   -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
+     |     |     +--rw apply-policy
+     |     |     |  +--rw config
+     |     |     |  |  +--rw import-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
+     |     |     |  |  +--rw default-import-policy?   default-policy-type
+     |     |     |  |  +--rw export-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
+     |     |     |  |  +--rw default-export-policy?   default-policy-type
+     |     |     |  +--ro state
+     |     |     |     +--ro import-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
+     |     |     |     +--ro default-import-policy?   default-policy-type
+     |     |     |     +--ro export-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
+     |     |     |     +--ro default-export-policy?   default-policy-type
+     |     |     +--rw ipv4-unicast
+     |     |     |  +--rw prefix-limit
+     |     |     |  |  +--rw config
+     |     |     |  |  |  +--rw max-prefixes?            uint32
+     |     |     |  |  |  +--rw prevent-teardown?        boolean
+     |     |     |  |  |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |  |  |  +--rw restart-timer?           decimal64
+     |     |     |  |  +--ro state
+     |     |     |  |     +--ro max-prefixes?            uint32
+     |     |     |  |     +--ro prevent-teardown?        boolean
+     |     |     |  |     +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |  |     +--ro restart-timer?           decimal64
+     |     |     |  +--rw config
+     |     |     |  |  +--rw send-default-route?   boolean
+     |     |     |  +--ro state
+     |     |     |     +--ro send-default-route?   boolean
+     |     |     +--rw ipv6-unicast
+     |     |     |  +--rw prefix-limit
+     |     |     |  |  +--rw config
+     |     |     |  |  |  +--rw max-prefixes?            uint32
+     |     |     |  |  |  +--rw prevent-teardown?        boolean
+     |     |     |  |  |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |  |  |  +--rw restart-timer?           decimal64
+     |     |     |  |  +--ro state
+     |     |     |  |     +--ro max-prefixes?            uint32
+     |     |     |  |     +--ro prevent-teardown?        boolean
+     |     |     |  |     +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |  |     +--ro restart-timer?           decimal64
+     |     |     |  +--rw config
+     |     |     |  |  +--rw send-default-route?   boolean
+     |     |     |  +--ro state
+     |     |     |     +--ro send-default-route?   boolean
+     |     |     +--rw ipv4-labeled-unicast
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw ipv6-labeled-unicast
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw l3vpn-ipv4-unicast
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw l3vpn-ipv6-unicast
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw l3vpn-ipv4-multicast
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw l3vpn-ipv6-multicast
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw l2vpn-vpls
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw l2vpn-evpn
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw srte-policy-ipv4
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw srte-policy-ipv6
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw use-multiple-paths
+     |     |        +--rw config
+     |     |        |  +--rw enabled?   boolean
+     |     |        +--ro state
+     |     |        |  +--ro enabled?   boolean
+     |     |        +--rw ebgp
+     |     |           +--rw config
+     |     |           |  +--rw allow-multiple-as?   boolean
+     |     |           +--ro state
+     |     |              +--ro allow-multiple-as?   boolean
+     |     +--rw enable-bfd
+     |        +--rw config
+     |        |  +--rw enabled?   boolean
+     |        +--ro state
+     |           +--ro enabled?   boolean
      +--rw peer-groups
      |  +--rw peer-group* [peer-group-name]
      |     +--rw peer-group-name       -> ../config/peer-group-name
@@ -885,210 +891,215 @@ module: openconfig-bgp
      |     |     +--ro export-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
      |     |     +--ro default-export-policy?   default-policy-type
      |     +--rw afi-safis
-     |        +--rw afi-safi* [afi-safi-name]
-     |           +--rw afi-safi-name           -> ../config/afi-safi-name
-     |           +--rw config
-     |           |  +--rw afi-safi-name?   identityref
-     |           |  +--rw enabled?         boolean
-     |           +--ro state
-     |           |  +--ro afi-safi-name?   identityref
-     |           |  +--ro enabled?         boolean
-     |           +--rw graceful-restart
-     |           |  +--rw config
-     |           |  |  +--rw enabled?   boolean
-     |           |  +--ro state
-     |           |     +--ro enabled?   boolean
-     |           +--rw add-paths
-     |           |  +--rw config
-     |           |  |  +--rw receive?                  boolean
-     |           |  |  +--rw send?                     boolean
-     |           |  |  +--rw send-max?                 uint8
-     |           |  |  +--rw eligible-prefix-policy?   -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
-     |           |  +--ro state
-     |           |     +--ro receive?                  boolean
-     |           |     +--ro send?                     boolean
-     |           |     +--ro send-max?                 uint8
-     |           |     +--ro eligible-prefix-policy?   -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
-     |           +--rw use-multiple-paths
-     |           |  +--rw config
-     |           |  |  +--rw enabled?   boolean
-     |           |  +--ro state
-     |           |  |  +--ro enabled?   boolean
-     |           |  +--rw ebgp
-     |           |  |  +--rw config
-     |           |  |  |  +--rw allow-multiple-as?   boolean
-     |           |  |  |  +--rw maximum-paths?       uint32
-     |           |  |  +--ro state
-     |           |  |     +--ro allow-multiple-as?   boolean
-     |           |  |     +--ro maximum-paths?       uint32
-     |           |  +--rw ibgp
-     |           |     +--rw config
-     |           |     |  +--rw maximum-paths?   uint32
-     |           |     +--ro state
-     |           |        +--ro maximum-paths?   uint32
-     |           +--rw apply-policy
-     |           |  +--rw config
-     |           |  |  +--rw import-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
-     |           |  |  +--rw default-import-policy?   default-policy-type
-     |           |  |  +--rw export-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
-     |           |  |  +--rw default-export-policy?   default-policy-type
-     |           |  +--ro state
-     |           |     +--ro import-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
-     |           |     +--ro default-import-policy?   default-policy-type
-     |           |     +--ro export-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
-     |           |     +--ro default-export-policy?   default-policy-type
-     |           +--rw ipv4-unicast
-     |           |  +--rw prefix-limit
-     |           |  |  +--rw config
-     |           |  |  |  +--rw max-prefixes?            uint32
-     |           |  |  |  +--rw prevent-teardown?        boolean
-     |           |  |  |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |  |  |  +--rw restart-timer?           decimal64
-     |           |  |  +--ro state
-     |           |  |     +--ro max-prefixes?            uint32
-     |           |  |     +--ro prevent-teardown?        boolean
-     |           |  |     +--ro warning-threshold-pct?   oc-types:percentage
-     |           |  |     +--ro restart-timer?           decimal64
-     |           |  +--rw config
-     |           |  |  +--rw send-default-route?   boolean
-     |           |  +--ro state
-     |           |     +--ro send-default-route?   boolean
-     |           +--rw ipv6-unicast
-     |           |  +--rw prefix-limit
-     |           |  |  +--rw config
-     |           |  |  |  +--rw max-prefixes?            uint32
-     |           |  |  |  +--rw prevent-teardown?        boolean
-     |           |  |  |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |  |  |  +--rw restart-timer?           decimal64
-     |           |  |  +--ro state
-     |           |  |     +--ro max-prefixes?            uint32
-     |           |  |     +--ro prevent-teardown?        boolean
-     |           |  |     +--ro warning-threshold-pct?   oc-types:percentage
-     |           |  |     +--ro restart-timer?           decimal64
-     |           |  +--rw config
-     |           |  |  +--rw send-default-route?   boolean
-     |           |  +--ro state
-     |           |     +--ro send-default-route?   boolean
-     |           +--rw ipv4-labeled-unicast
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw ipv6-labeled-unicast
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw l3vpn-ipv4-unicast
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw l3vpn-ipv6-unicast
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw l3vpn-ipv4-multicast
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw l3vpn-ipv6-multicast
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw l2vpn-vpls
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw l2vpn-evpn
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw srte-policy-ipv4
-     |           |  +--rw prefix-limit
-     |           |     +--rw config
-     |           |     |  +--rw max-prefixes?            uint32
-     |           |     |  +--rw prevent-teardown?        boolean
-     |           |     |  +--rw warning-threshold-pct?   oc-types:percentage
-     |           |     |  +--rw restart-timer?           decimal64
-     |           |     +--ro state
-     |           |        +--ro max-prefixes?            uint32
-     |           |        +--ro prevent-teardown?        boolean
-     |           |        +--ro warning-threshold-pct?   oc-types:percentage
-     |           |        +--ro restart-timer?           decimal64
-     |           +--rw srte-policy-ipv6
-     |              +--rw prefix-limit
-     |                 +--rw config
-     |                 |  +--rw max-prefixes?            uint32
-     |                 |  +--rw prevent-teardown?        boolean
-     |                 |  +--rw warning-threshold-pct?   oc-types:percentage
-     |                 |  +--rw restart-timer?           decimal64
-     |                 +--ro state
-     |                    +--ro max-prefixes?            uint32
-     |                    +--ro prevent-teardown?        boolean
-     |                    +--ro warning-threshold-pct?   oc-types:percentage
-     |                    +--ro restart-timer?           decimal64
+     |     |  +--rw afi-safi* [afi-safi-name]
+     |     |     +--rw afi-safi-name           -> ../config/afi-safi-name
+     |     |     +--rw config
+     |     |     |  +--rw afi-safi-name?   identityref
+     |     |     |  +--rw enabled?         boolean
+     |     |     +--ro state
+     |     |     |  +--ro afi-safi-name?   identityref
+     |     |     |  +--ro enabled?         boolean
+     |     |     +--rw graceful-restart
+     |     |     |  +--rw config
+     |     |     |  |  +--rw enabled?   boolean
+     |     |     |  +--ro state
+     |     |     |     +--ro enabled?   boolean
+     |     |     +--rw add-paths
+     |     |     |  +--rw config
+     |     |     |  |  +--rw receive?                  boolean
+     |     |     |  |  +--rw send?                     boolean
+     |     |     |  |  +--rw send-max?                 uint8
+     |     |     |  |  +--rw eligible-prefix-policy?   -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
+     |     |     |  +--ro state
+     |     |     |     +--ro receive?                  boolean
+     |     |     |     +--ro send?                     boolean
+     |     |     |     +--ro send-max?                 uint8
+     |     |     |     +--ro eligible-prefix-policy?   -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
+     |     |     +--rw use-multiple-paths
+     |     |     |  +--rw config
+     |     |     |  |  +--rw enabled?   boolean
+     |     |     |  +--ro state
+     |     |     |  |  +--ro enabled?   boolean
+     |     |     |  +--rw ebgp
+     |     |     |  |  +--rw config
+     |     |     |  |  |  +--rw allow-multiple-as?   boolean
+     |     |     |  |  |  +--rw maximum-paths?       uint32
+     |     |     |  |  +--ro state
+     |     |     |  |     +--ro allow-multiple-as?   boolean
+     |     |     |  |     +--ro maximum-paths?       uint32
+     |     |     |  +--rw ibgp
+     |     |     |     +--rw config
+     |     |     |     |  +--rw maximum-paths?   uint32
+     |     |     |     +--ro state
+     |     |     |        +--ro maximum-paths?   uint32
+     |     |     +--rw apply-policy
+     |     |     |  +--rw config
+     |     |     |  |  +--rw import-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
+     |     |     |  |  +--rw default-import-policy?   default-policy-type
+     |     |     |  |  +--rw export-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
+     |     |     |  |  +--rw default-export-policy?   default-policy-type
+     |     |     |  +--ro state
+     |     |     |     +--ro import-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
+     |     |     |     +--ro default-import-policy?   default-policy-type
+     |     |     |     +--ro export-policy*           -> /oc-rpol:routing-policy/policy-definitions/policy-definition/name
+     |     |     |     +--ro default-export-policy?   default-policy-type
+     |     |     +--rw ipv4-unicast
+     |     |     |  +--rw prefix-limit
+     |     |     |  |  +--rw config
+     |     |     |  |  |  +--rw max-prefixes?            uint32
+     |     |     |  |  |  +--rw prevent-teardown?        boolean
+     |     |     |  |  |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |  |  |  +--rw restart-timer?           decimal64
+     |     |     |  |  +--ro state
+     |     |     |  |     +--ro max-prefixes?            uint32
+     |     |     |  |     +--ro prevent-teardown?        boolean
+     |     |     |  |     +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |  |     +--ro restart-timer?           decimal64
+     |     |     |  +--rw config
+     |     |     |  |  +--rw send-default-route?   boolean
+     |     |     |  +--ro state
+     |     |     |     +--ro send-default-route?   boolean
+     |     |     +--rw ipv6-unicast
+     |     |     |  +--rw prefix-limit
+     |     |     |  |  +--rw config
+     |     |     |  |  |  +--rw max-prefixes?            uint32
+     |     |     |  |  |  +--rw prevent-teardown?        boolean
+     |     |     |  |  |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |  |  |  +--rw restart-timer?           decimal64
+     |     |     |  |  +--ro state
+     |     |     |  |     +--ro max-prefixes?            uint32
+     |     |     |  |     +--ro prevent-teardown?        boolean
+     |     |     |  |     +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |  |     +--ro restart-timer?           decimal64
+     |     |     |  +--rw config
+     |     |     |  |  +--rw send-default-route?   boolean
+     |     |     |  +--ro state
+     |     |     |     +--ro send-default-route?   boolean
+     |     |     +--rw ipv4-labeled-unicast
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw ipv6-labeled-unicast
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw l3vpn-ipv4-unicast
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw l3vpn-ipv6-unicast
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw l3vpn-ipv4-multicast
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw l3vpn-ipv6-multicast
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw l2vpn-vpls
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw l2vpn-evpn
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw srte-policy-ipv4
+     |     |     |  +--rw prefix-limit
+     |     |     |     +--rw config
+     |     |     |     |  +--rw max-prefixes?            uint32
+     |     |     |     |  +--rw prevent-teardown?        boolean
+     |     |     |     |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |     |     |  +--rw restart-timer?           decimal64
+     |     |     |     +--ro state
+     |     |     |        +--ro max-prefixes?            uint32
+     |     |     |        +--ro prevent-teardown?        boolean
+     |     |     |        +--ro warning-threshold-pct?   oc-types:percentage
+     |     |     |        +--ro restart-timer?           decimal64
+     |     |     +--rw srte-policy-ipv6
+     |     |        +--rw prefix-limit
+     |     |           +--rw config
+     |     |           |  +--rw max-prefixes?            uint32
+     |     |           |  +--rw prevent-teardown?        boolean
+     |     |           |  +--rw warning-threshold-pct?   oc-types:percentage
+     |     |           |  +--rw restart-timer?           decimal64
+     |     |           +--ro state
+     |     |              +--ro max-prefixes?            uint32
+     |     |              +--ro prevent-teardown?        boolean
+     |     |              +--ro warning-threshold-pct?   oc-types:percentage
+     |     |              +--ro restart-timer?           decimal64
+     |     +--rw enable-bfd
+     |        +--rw config
+     |        |  +--rw enabled?   boolean
+     |        +--ro state
+     |           +--ro enabled?   boolean
      +--ro rib
         +--ro attr-sets
         |  +--ro attr-set* [index]
@@ -1131,7 +1142,7 @@ module: openconfig-bgp
         |                    |  +--ro type?          identityref
         |                    |  +--ro colors*        uint32
         |                    |  +--ro preference?    uint32
-        |                    |  +--ro binding-sid?   oc-sr:sr-sid-type
+        |                    |  +--ro binding-sid?   oc-srt:sr-sid-type
         |                    +--ro remote-endpoints
         |                    |  +--ro remote-endpoint* [endpoint]
         |                    |     +--ro endpoint    -> ../state/endpoint
@@ -1150,7 +1161,7 @@ module: openconfig-bgp
         |                                +--ro state
         |                                   +--ro index?                 uint64
         |                                   +--ro type?                  enumeration
-        |                                   +--ro sid?                   oc-sr:sr-sid-type
+        |                                   +--ro sid?                   oc-srt:sr-sid-type
         |                                   +--ro mpls-tc?               uint8
         |                                   +--ro mpls-bos?              boolean
         |                                   +--ro mpls-ttl?              uint8

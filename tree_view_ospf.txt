@@ -1,5 +1,5 @@
-
 module: openconfig-ospf-policy
+
   augment /oc-rpol:routing-policy/oc-rpol:policy-definitions/oc-rpol:policy-definition/oc-rpol:statements/oc-rpol:statement/oc-rpol:conditions:
     +--rw ospf-conditions
        +--rw config
@@ -19,3 +19,4 @@ module: openconfig-ospf-policy
           +--ro state
              +--ro metric-type?   enumeration
              +--ro metric?        oc-ospf-types:ospf-metric
+

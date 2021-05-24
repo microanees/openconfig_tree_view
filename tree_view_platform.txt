@@ -1,13 +1,15 @@
-
 module: openconfig-platform-port
+
   augment /oc-if:interfaces/oc-if:interface/oc-if:state:
     +--ro hardware-port?   -> /oc-platform:components/component/name
 
 module: openconfig-platform-transceiver
+
   augment /oc-if:interfaces/oc-if:interface/oc-if:state:
     +--ro transceiver?   -> /oc-platform:components/component[oc-platform:name=current()/../oc-port:hardware-port]/oc-platform:subcomponents/subcomponent/name
   augment /oc-if:interfaces/oc-if:interface/oc-if:state:
     +--ro physical-channel*   -> /oc-platform:components/component[oc-platform:name=current()/../oc-transceiver:transceiver]/transceiver/physical-channels/channel/index
+
 module: openconfig-platform
   +--rw components
      +--rw component* [name]
@@ -72,12 +74,19 @@ module: openconfig-platform
         |  +--rw config
         |  +--ro state
         |  +--rw oc-port:breakout-mode
-        |     +--rw oc-port:config
-        |     |  +--rw oc-port:num-channels?    uint8
-        |     |  +--rw oc-port:channel-speed?   identityref
-        |     +--ro oc-port:state
-        |        +--ro oc-port:num-channels?    uint8
-        |        +--ro oc-port:channel-speed?   identityref
+        |     +--rw oc-port:groups
+        |        +--rw oc-port:group* [index]
+        |           +--rw oc-port:index     -> ../config/index
+        |           +--rw oc-port:config
+        |           |  +--rw oc-port:index?                   uint8
+        |           |  +--rw oc-port:num-breakouts?           uint8
+        |           |  +--rw oc-port:breakout-speed?          identityref
+        |           |  +--rw oc-port:num-physical-channels?   uint8
+        |           +--ro oc-port:state
+        |              +--ro oc-port:index?                   uint8
+        |              +--ro oc-port:num-breakouts?           uint8
+        |              +--ro oc-port:breakout-speed?          identityref
+        |              +--ro oc-port:num-physical-channels?   uint8
         +--rw power-supply
         |  +--rw config
         |  |  +--rw oc-platform-psu:enabled?   boolean
@@ -114,9 +123,154 @@ module: openconfig-platform
         +--rw integrated-circuit
         |  +--rw config
         |  +--ro state
+        |  +--ro oc-ppc:pipeline-counters
+        |     +--ro oc-ppc:packet
+        |     |  +--ro oc-ppc:interface-block
+        |     |  |  +--ro oc-ppc:state
+        |     |  |     +--ro oc-ppc:in-packets?    oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-packets?   oc-yang:counter64
+        |     |  |     +--ro oc-ppc:in-bytes?      oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-bytes?     oc-yang:counter64
+        |     |  +--ro oc-ppc:lookup-block
+        |     |  |  +--ro oc-ppc:state
+        |     |  |     +--ro oc-ppc:lookup-utilization?         oc-types:percentage
+        |     |  |     +--ro oc-ppc:in-packets?                 oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-packets?                oc-yang:counter64
+        |     |  |     +--ro oc-ppc:in-bytes?                   oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-bytes?                  oc-yang:counter64
+        |     |  |     +--ro oc-ppc:lookup-memory?              uint64
+        |     |  |     +--ro oc-ppc:lookup-memory-used?         uint64
+        |     |  |     +--ro oc-ppc:nexthop-memory?             uint64
+        |     |  |     +--ro oc-ppc:nexthop-memory-used?        uint64
+        |     |  |     +--ro oc-ppc:acl-memory-total-entries?   uint64
+        |     |  |     +--ro oc-ppc:acl-memory-used-entries?    uint64
+        |     |  |     +--ro oc-ppc:acl-memory-total-bytes?     uint64
+        |     |  |     +--ro oc-ppc:acl-memory-used-bytes?      uint64
+        |     |  |     +--ro oc-ppc:fragment-total-pkts?        oc-yang:counter64
+        |     |  +--ro oc-ppc:queueing-block
+        |     |  |  +--ro oc-ppc:state
+        |     |  |     +--ro oc-ppc:in-packets?          oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-packets?         oc-yang:counter64
+        |     |  |     +--ro oc-ppc:in-bytes?            oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-bytes?           oc-yang:counter64
+        |     |  |     +--ro oc-ppc:queue-memory?        uint64
+        |     |  |     +--ro oc-ppc:queue-memory-used?   uint64
+        |     |  |     +--ro oc-ppc:loopback-packets?    oc-yang:counter64
+        |     |  |     +--ro oc-ppc:loopback-bytes?      uint64
+        |     |  +--ro oc-ppc:fabric-block
+        |     |  |  +--ro oc-ppc:state
+        |     |  |     +--ro oc-ppc:in-cells?                    oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-cells?                   oc-yang:counter64
+        |     |  |     +--ro oc-ppc:in-packets?                  oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-packets?                 oc-yang:counter64
+        |     |  |     +--ro oc-ppc:in-bytes?                    oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-bytes?                   oc-yang:counter64
+        |     |  |     +--ro oc-ppc:in-high-priority-cells?      oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-high-priority-cells?     oc-yang:counter64
+        |     |  |     +--ro oc-ppc:in-low-priority-cells?       oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-low-priority-cells?      oc-yang:counter64
+        |     |  |     +--ro oc-ppc:in-high-priority-packets?    oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-high-priority-packets?   oc-yang:counter64
+        |     |  |     +--ro oc-ppc:in-low-priority-packets?     oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-low-priority-packets?    oc-yang:counter64
+        |     |  +--ro oc-ppc:host-interface-block
+        |     |     +--ro oc-ppc:state
+        |     |        +--ro oc-ppc:in-packets?                  oc-yang:counter64
+        |     |        +--ro oc-ppc:out-packets?                 oc-yang:counter64
+        |     |        +--ro oc-ppc:in-bytes?                    oc-yang:counter64
+        |     |        +--ro oc-ppc:out-bytes?                   oc-yang:counter64
+        |     |        +--ro oc-ppc:fragment-punt-pkts?          oc-yang:counter64
+        |     |        +--ro oc-ppc:in-high-priority-packets?    oc-yang:counter64
+        |     |        +--ro oc-ppc:out-high-priority-packets?   oc-yang:counter64
+        |     |        +--ro oc-ppc:in-low-priority-packets?     oc-yang:counter64
+        |     |        +--ro oc-ppc:out-low-priority-packets?    oc-yang:counter64
+        |     +--ro oc-ppc:drop
+        |     |  +--ro oc-ppc:interface-block
+        |     |  |  +--ro oc-ppc:state
+        |     |  |     +--ro oc-ppc:oversubscription?   oc-yang:counter64
+        |     |  |     +--ro oc-ppc:in-drops?           oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-drops?          oc-yang:counter64
+        |     |  +--ro oc-ppc:lookup-block
+        |     |  |  +--ro oc-ppc:state
+        |     |  |     +--ro oc-ppc:oversubscription?           oc-yang:counter64
+        |     |  |     +--ro oc-ppc:no-route?                   oc-yang:counter64
+        |     |  |     +--ro oc-ppc:no-label?                   oc-yang:counter64
+        |     |  |     +--ro oc-ppc:no-nexthop?                 oc-yang:counter64
+        |     |  |     +--ro oc-ppc:invalid-packet?             oc-yang:counter64
+        |     |  |     +--ro oc-ppc:forwarding-policy?          oc-yang:counter64
+        |     |  |     +--ro oc-ppc:incorrect-software-state?   oc-yang:counter64
+        |     |  |     +--ro oc-ppc:rate-limit?                 oc-yang:counter64
+        |     |  |     +--ro oc-ppc:fragment-total-drops?       oc-yang:counter64
+        |     |  |     +--ro oc-ppc:lookup-aggregte?            oc-yang:counter64
+        |     |  |     +--ro oc-ppc:acl-drops?                  oc-yang:counter64
+        |     |  +--ro oc-ppc:queueing-block
+        |     |  |  +--ro oc-ppc:state
+        |     |  |     +--ro oc-ppc:oversubscription?   oc-yang:counter64
+        |     |  |     +--ro oc-ppc:memory-limit?       oc-yang:counter64
+        |     |  |     +--ro oc-ppc:incorrect-state?    oc-yang:counter64
+        |     |  |     +--ro oc-ppc:lookup-queue?       oc-yang:counter64
+        |     |  +--ro oc-ppc:fabric-block
+        |     |  |  +--ro oc-ppc:state
+        |     |  |     +--ro oc-ppc:oversubscription?    oc-yang:counter64
+        |     |  |     +--ro oc-ppc:lost-packets?        oc-yang:counter64
+        |     |  |     +--ro oc-ppc:in-high-priority?    oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-high-priority?   oc-yang:counter64
+        |     |  |     +--ro oc-ppc:in-low-priority?     oc-yang:counter64
+        |     |  |     +--ro oc-ppc:out-low-priority?    oc-yang:counter64
+        |     |  |     +--ro oc-ppc:fabric-aggregate?    oc-yang:counter64
+        |     |  +--ro oc-ppc:host-interface-block
+        |     |     +--ro oc-ppc:state
+        |     |        +--ro oc-ppc:oversubscription?    oc-yang:counter64
+        |     |        +--ro oc-ppc:rate-limit?          oc-yang:counter64
+        |     |        +--ro oc-ppc:in-high-priority?    oc-yang:counter64
+        |     |        +--ro oc-ppc:out-high-priority?   oc-yang:counter64
+        |     |        +--ro oc-ppc:in-low-priority?     oc-yang:counter64
+        |     |        +--ro oc-ppc:out-low-priority?    oc-yang:counter64
+        |     |        +--ro oc-ppc:fragment-punt?       oc-yang:counter64
+        |     |        +--ro oc-ppc:host-aggregate?      oc-yang:counter64
+        |     +--ro oc-ppc:errors
+        |        +--ro oc-ppc:interface-block
+        |        |  +--ro oc-ppc:state
+        |        |     +--ro oc-ppc:error-name?        string
+        |        |     +--ro oc-ppc:error-count?       uint64
+        |        |     +--ro oc-ppc:error-threshold?   uint64
+        |        |     +--ro oc-ppc:error-action?      enumeration
+        |        |     +--ro oc-ppc:error-level?       enumeration
+        |        +--ro oc-ppc:lookup-block
+        |        |  +--ro oc-ppc:state
+        |        |     +--ro oc-ppc:error-name?        string
+        |        |     +--ro oc-ppc:error-count?       uint64
+        |        |     +--ro oc-ppc:error-threshold?   uint64
+        |        |     +--ro oc-ppc:error-action?      enumeration
+        |        |     +--ro oc-ppc:error-level?       enumeration
+        |        +--ro oc-ppc:queueing-block
+        |        |  +--ro oc-ppc:state
+        |        |     +--ro oc-ppc:error-name?        string
+        |        |     +--ro oc-ppc:error-count?       uint64
+        |        |     +--ro oc-ppc:error-threshold?   uint64
+        |        |     +--ro oc-ppc:error-action?      enumeration
+        |        |     +--ro oc-ppc:error-level?       enumeration
+        |        +--ro oc-ppc:fabric-block
+        |        |  +--ro oc-ppc:state
+        |        |     +--ro oc-ppc:error-name?        string
+        |        |     +--ro oc-ppc:error-count?       uint64
+        |        |     +--ro oc-ppc:error-threshold?   uint64
+        |        |     +--ro oc-ppc:error-action?      enumeration
+        |        |     +--ro oc-ppc:error-level?       enumeration
+        |        +--ro oc-ppc:host-interface-block
+        |           +--ro oc-ppc:state
+        |              +--ro oc-ppc:error-name?        string
+        |              +--ro oc-ppc:error-count?       uint64
+        |              +--ro oc-ppc:error-threshold?   uint64
+        |              +--ro oc-ppc:error-action?      enumeration
+        |              +--ro oc-ppc:error-level?       enumeration
         +--rw backplane
         |  +--rw config
         |  +--ro state
+        +--rw software-module
+        |  +--rw config
+        |  +--ro state
+        |     +--ro oc-sw-module:module-type?   identityref
         +--rw oc-linecard:linecard
         |  +--rw oc-linecard:config
         |  |  +--rw oc-linecard:power-admin-state?   oc-platform-types:component-power-type
@@ -125,15 +279,17 @@ module: openconfig-platform
         |     +--ro oc-linecard:slot-id?             string
         +--rw oc-transceiver:transceiver
            +--rw oc-transceiver:config
-           |  +--rw oc-transceiver:enabled?                boolean
-           |  +--rw oc-transceiver:form-factor-preconf?    identityref
-           |  +--rw oc-transceiver:ethernet-pmd-preconf?   identityref
-           |  +--rw oc-transceiver:fec-mode?               identityref
+           |  +--rw oc-transceiver:enabled?                  boolean
+           |  +--rw oc-transceiver:form-factor-preconf?      identityref
+           |  +--rw oc-transceiver:ethernet-pmd-preconf?     identityref
+           |  +--rw oc-transceiver:fec-mode?                 identityref
+           |  +--rw oc-transceiver:module-functional-type?   identityref
            +--ro oc-transceiver:state
            |  +--ro oc-transceiver:enabled?                     boolean
            |  +--ro oc-transceiver:form-factor-preconf?         identityref
            |  +--ro oc-transceiver:ethernet-pmd-preconf?        identityref
            |  +--ro oc-transceiver:fec-mode?                    identityref
+           |  +--ro oc-transceiver:module-functional-type?      identityref
            |  +--ro oc-transceiver:present?                     enumeration
            |  +--ro oc-transceiver:form-factor?                 identityref
            |  +--ro oc-transceiver:connector-type?              identityref
@@ -195,16 +351,18 @@ module: openconfig-platform
               +--rw oc-transceiver:channel* [index]
                  +--rw oc-transceiver:index     -> ../config/index
                  +--rw oc-transceiver:config
-                 |  +--rw oc-transceiver:index?                 uint16
-                 |  +--rw oc-transceiver:description?           string
-                 |  +--rw oc-transceiver:tx-laser?              boolean
-                 |  +--rw oc-transceiver:target-output-power?   decimal64
+                 |  +--rw oc-transceiver:index?                        uint16
+                 |  +--rw oc-transceiver:associated-optical-channel?   -> /oc-platform:components/component/name
+                 |  +--rw oc-transceiver:description?                  string
+                 |  +--rw oc-transceiver:tx-laser?                     boolean
+                 |  +--rw oc-transceiver:target-output-power?          decimal64
                  +--ro oc-transceiver:state
-                    +--ro oc-transceiver:index?                 uint16
-                    +--ro oc-transceiver:description?           string
-                    +--ro oc-transceiver:tx-laser?              boolean
-                    +--ro oc-transceiver:target-output-power?   decimal64
-                    +--ro oc-transceiver:output-frequency?      oc-opt-types:frequency-type
+                    +--ro oc-transceiver:index?                        uint16
+                    +--ro oc-transceiver:associated-optical-channel?   -> /oc-platform:components/component/name
+                    +--ro oc-transceiver:description?                  string
+                    +--ro oc-transceiver:tx-laser?                     boolean
+                    +--ro oc-transceiver:target-output-power?          decimal64
+                    +--ro oc-transceiver:output-frequency?             oc-opt-types:frequency-type
                     +--ro oc-transceiver:output-power
                     |  +--ro oc-transceiver:instant?    decimal64
                     |  +--ro oc-transceiver:avg?        decimal64

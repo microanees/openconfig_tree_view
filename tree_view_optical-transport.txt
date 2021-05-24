@@ -16,6 +16,7 @@ module: openconfig-channel-monitor
                  +--ro lower-frequency?   oc-opt-types:frequency-type
                  +--ro upper-frequency?   oc-opt-types:frequency-type
                  +--ro power?             decimal64
+
 module: openconfig-optical-amplifier
   +--rw optical-amplifier
      +--rw amplifiers
@@ -162,6 +163,7 @@ module: openconfig-optical-amplifier
               |  +--ro min-time?   oc-types:timeticks64
               |  +--ro max-time?   oc-types:timeticks64
               +--ro output-frequency?     oc-opt-types:frequency-type
+
 module: openconfig-optical-attenuator
   +--rw optical-attenuator
      +--rw attenuators
@@ -206,6 +208,7 @@ module: openconfig-optical-attenuator
                  +--ro interval?   oc-types:stat-interval
                  +--ro min-time?   oc-types:timeticks64
                  +--ro max-time?   oc-types:timeticks64
+
 module: openconfig-terminal-device
   +--rw terminal-device
      +--rw config
@@ -222,6 +225,7 @@ module: openconfig-terminal-device
      |     |  +--rw logical-channel-type?   identityref
      |     |  +--rw loopback-mode?          oc-opt-types:loopback-mode-type
      |     |  +--rw test-signal?            boolean
+     |     |  +--rw client-mapping-mode?    identityref
      |     +--ro state
      |     |  +--ro index?                  uint32
      |     |  +--ro description?            string
@@ -231,6 +235,7 @@ module: openconfig-terminal-device
      |     |  +--ro logical-channel-type?   identityref
      |     |  +--ro loopback-mode?          oc-opt-types:loopback-mode-type
      |     |  +--ro test-signal?            boolean
+     |     |  +--ro client-mapping-mode?    identityref
      |     |  +--ro link-state?             enumeration
      |     +--rw otn
      |     |  +--rw config
@@ -303,9 +308,17 @@ module: openconfig-terminal-device
      |     |  |  +--ro in-8021q-frames?                   oc-yang:counter64
      |     |  |  +--ro in-crc-errors?                     oc-yang:counter64
      |     |  |  +--ro in-block-errors?                   oc-yang:counter64
+     |     |  |  +--ro in-carrier-errors?                 oc-yang:counter64
+     |     |  |  +--ro in-interrupted-tx?                 oc-yang:counter64
+     |     |  |  +--ro in-late-collision?                 oc-yang:counter64
+     |     |  |  +--ro in-mac-errors-rx?                  oc-yang:counter64
+     |     |  |  +--ro in-single-collision?               oc-yang:counter64
+     |     |  |  +--ro in-symbol-error?                   oc-yang:counter64
+     |     |  |  +--ro in-maxsize-exceeded?               oc-yang:counter64
      |     |  |  +--ro out-mac-control-frames?            oc-yang:counter64
      |     |  |  +--ro out-mac-pause-frames?              oc-yang:counter64
      |     |  |  +--ro out-8021q-frames?                  oc-yang:counter64
+     |     |  |  +--ro out-mac-errors-tx?                 oc-yang:counter64
      |     |  |  +--ro in-pcs-bip-errors?                 oc-yang:counter64
      |     |  |  +--ro in-pcs-errored-seconds?            oc-yang:counter64
      |     |  |  +--ro in-pcs-severely-errored-seconds?   oc-yang:counter64
@@ -362,9 +375,11 @@ module: openconfig-terminal-device
      |     |  +--rw config
      |     |  |  +--rw transceiver?        -> /oc-platform:components/component/name
      |     |  |  +--rw physical-channel*   -> /oc-platform:components/component/oc-transceiver:transceiver/physical-channels/channel/index
+     |     |  |  +--rw interface?          oc-if:base-interface-ref
      |     |  +--ro state
      |     |     +--ro transceiver?        -> /oc-platform:components/component/name
      |     |     +--ro physical-channel*   -> /oc-platform:components/component/oc-transceiver:transceiver/physical-channels/channel/index
+     |     |     +--ro interface?          oc-if:base-interface-ref
      |     +--rw logical-channel-assignments
      |        +--rw assignment* [index]
      |           +--rw index     -> ../config/index
@@ -466,6 +481,7 @@ module: openconfig-terminal-device
              +--ro max-time?   oc-types:timeticks64
 
 module: openconfig-transport-line-common
+
   augment /oc-platform:components/oc-platform:component/oc-platform:port:
     +--rw optical-port
        +--rw config
@@ -492,6 +508,7 @@ module: openconfig-transport-line-common
              +--ro max-time?   oc-types:timeticks64
   augment /oc-if:interfaces/oc-if:interface:
     +--rw sonet
+
 module: openconfig-transport-line-connectivity
   +--rw connections
      +--rw connection* [index]
@@ -506,6 +523,7 @@ module: openconfig-transport-line-connectivity
            +--ro source?       union
            +--ro dest?         union
            +--ro fiber-type?   identityref
+
 module: openconfig-transport-line-protection
   +--rw aps
      +--rw aps-modules
@@ -625,33 +643,40 @@ module: openconfig-transport-line-protection
                        +--ro interval?   oc-types:stat-interval
                        +--ro min-time?   oc-types:timeticks64
                        +--ro max-time?   oc-types:timeticks64
+
 module: openconfig-wavelength-router
   +--rw wavelength-router
      +--rw media-channels
      |  +--rw channel* [index]
      |     +--rw index                     -> ../config/index
      |     +--rw config
-     |     |  +--rw index?                     uint32
-     |     |  +--rw name?                      string
-     |     |  +--rw lower-frequency?           oc-opt-types:frequency-type
-     |     |  +--rw upper-frequency?           oc-opt-types:frequency-type
-     |     |  +--rw admin-status?              oc-opt-types:admin-state-type
-     |     |  +--rw super-channel?             boolean
-     |     |  +--rw super-channel-parent?      -> ../../../channel/config/index
-     |     |  +--rw ase-control-mode?          identityref
-     |     |  +--rw ase-injection-threshold?   decimal64
+     |     |  +--rw index?                      uint32
+     |     |  +--rw name?                       string
+     |     |  +--rw lower-frequency?            oc-opt-types:frequency-type
+     |     |  +--rw upper-frequency?            oc-opt-types:frequency-type
+     |     |  +--rw admin-status?               oc-opt-types:admin-state-type
+     |     |  +--rw super-channel?              boolean
+     |     |  +--rw super-channel-parent?       -> ../../../channel/config/index
+     |     |  +--rw ase-control-mode?           identityref
+     |     |  +--rw ase-injection-mode?         enumeration
+     |     |  +--rw ase-injection-threshold?    decimal64
+     |     |  +--rw ase-injection-delta?        decimal64
+     |     |  +--rw attenuation-control-mode?   identityref
      |     +--ro state
-     |     |  +--ro index?                     uint32
-     |     |  +--ro name?                      string
-     |     |  +--ro lower-frequency?           oc-opt-types:frequency-type
-     |     |  +--ro upper-frequency?           oc-opt-types:frequency-type
-     |     |  +--ro admin-status?              oc-opt-types:admin-state-type
-     |     |  +--ro super-channel?             boolean
-     |     |  +--ro super-channel-parent?      -> ../../../channel/config/index
-     |     |  +--ro ase-control-mode?          identityref
-     |     |  +--ro ase-injection-threshold?   decimal64
-     |     |  +--ro oper-status?               enumeration
-     |     |  +--ro ase-status?                enumeration
+     |     |  +--ro index?                      uint32
+     |     |  +--ro name?                       string
+     |     |  +--ro lower-frequency?            oc-opt-types:frequency-type
+     |     |  +--ro upper-frequency?            oc-opt-types:frequency-type
+     |     |  +--ro admin-status?               oc-opt-types:admin-state-type
+     |     |  +--ro super-channel?              boolean
+     |     |  +--ro super-channel-parent?       -> ../../../channel/config/index
+     |     |  +--ro ase-control-mode?           identityref
+     |     |  +--ro ase-injection-mode?         enumeration
+     |     |  +--ro ase-injection-threshold?    decimal64
+     |     |  +--ro ase-injection-delta?        decimal64
+     |     |  +--ro attenuation-control-mode?   identityref
+     |     |  +--ro oper-status?                enumeration
+     |     |  +--ro ase-status?                 enumeration
      |     +--rw source
      |     |  +--rw config
      |     |  |  +--rw port-name?   -> /oc-platform:components/component/name

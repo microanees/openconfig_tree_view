@@ -1,0 +1,125 @@
+module: openconfig-fw-high-availability
+  +--rw ha-groups
+     +--rw ha-group* [id]
+        +--rw id                  -> ../config/id
+        +--rw config
+        |  +--rw ha-enabled?             boolean
+        |  +--rw ha-mode?                enumeration
+        |  +--rw ha-key?                 string
+        |  +--rw ha-key-hashed?          oc-aaa-types:crypt-password-type
+        |  +--rw ha-msg-encryption?      boolean
+        |  +--rw id?                     uint8
+        |  +--rw ha-device-id?           uint8
+        |  +--rw preempt?                boolean
+        |  +--rw priority?               uint8
+        |  +--rw preempt-hold-timer?     uint32
+        |  +--rw hello-interval?         uint32
+        |  +--rw global-health-policy?   enumeration
+        +--ro state
+        |  +--ro ha-enabled?                 boolean
+        |  +--ro ha-mode?                    enumeration
+        |  +--ro ha-key?                     string
+        |  +--ro ha-key-hashed?              oc-aaa-types:crypt-password-type
+        |  +--ro ha-msg-encryption?          boolean
+        |  +--ro id?                         uint8
+        |  +--ro ha-device-id?               uint8
+        |  +--ro preempt?                    boolean
+        |  +--ro priority?                   uint8
+        |  +--ro preempt-hold-timer?         uint32
+        |  +--ro hello-interval?             uint32
+        |  +--ro global-health-policy?       enumeration
+        |  +--ro ha-state?                   enumeration
+        |  +--ro ha-state-last-change?       oc-types:timeticks64
+        |  +--ro ha-config-sync?             boolean
+        |  +--ro ha-session-sync?            boolean
+        |  +--ro ha-mismatched-parameters*   identityref
+        |  +--ro global-health-status?       enumeration
+        +--rw control-link
+        |  +--rw config
+        |  |  +--rw control-link-interface?      oc-if:base-interface-ref
+        |  |  +--rw control-link-port?           oc-inet:port-number
+        |  |  +--rw control-link-ipv4?           oc-inet:ipv4-prefix
+        |  |  +--rw control-link-gateway?        oc-inet:ipv4-address
+        |  |  +--rw control-link-ipv6?           oc-inet:ipv6-prefix
+        |  |  +--rw control-link-ipv6-gateway?   oc-inet:ipv6-address
+        |  |  +--rw control-link-peer-ipv4?      oc-inet:ipv4-prefix
+        |  |  +--rw control-link-peer-ipv6?      oc-inet:ipv6-prefix
+        |  +--ro state
+        |  |  +--ro control-link-interface?      oc-if:base-interface-ref
+        |  |  +--ro control-link-port?           oc-inet:port-number
+        |  |  +--ro control-link-ipv4?           oc-inet:ipv4-prefix
+        |  |  +--ro control-link-gateway?        oc-inet:ipv4-address
+        |  |  +--ro control-link-ipv6?           oc-inet:ipv6-prefix
+        |  |  +--ro control-link-ipv6-gateway?   oc-inet:ipv6-address
+        |  |  +--ro control-link-peer-ipv4?      oc-inet:ipv4-prefix
+        |  |  +--ro control-link-peer-ipv6?      oc-inet:ipv6-prefix
+        |  +--rw backup
+        |     +--rw config
+        |     |  +--rw control-link-interface?      oc-if:base-interface-ref
+        |     |  +--rw control-link-port?           oc-inet:port-number
+        |     |  +--rw control-link-ipv4?           oc-inet:ipv4-prefix
+        |     |  +--rw control-link-gateway?        oc-inet:ipv4-address
+        |     |  +--rw control-link-ipv6?           oc-inet:ipv6-prefix
+        |     |  +--rw control-link-ipv6-gateway?   oc-inet:ipv6-address
+        |     |  +--rw control-link-peer-ipv4?      oc-inet:ipv4-prefix
+        |     |  +--rw control-link-peer-ipv6?      oc-inet:ipv6-prefix
+        |     +--ro state
+        |        +--ro control-link-interface?      oc-if:base-interface-ref
+        |        +--ro control-link-port?           oc-inet:port-number
+        |        +--ro control-link-ipv4?           oc-inet:ipv4-prefix
+        |        +--ro control-link-gateway?        oc-inet:ipv4-address
+        |        +--ro control-link-ipv6?           oc-inet:ipv6-prefix
+        |        +--ro control-link-ipv6-gateway?   oc-inet:ipv6-address
+        |        +--ro control-link-peer-ipv4?      oc-inet:ipv4-prefix
+        |        +--ro control-link-peer-ipv6?      oc-inet:ipv6-prefix
+        +--rw data-link
+        |  +--rw config
+        |  |  +--rw data-link-interface?      oc-if:base-interface-ref
+        |  |  +--rw data-link-port?           oc-inet:port-number
+        |  |  +--rw data-link-ipv4?           oc-inet:ipv4-prefix
+        |  |  +--rw data-link-gateway?        oc-inet:ipv4-address
+        |  |  +--rw data-link-ipv6?           oc-inet:ipv6-prefix
+        |  |  +--rw data-link-ipv6-gateway?   oc-inet:ipv6-address
+        |  |  +--rw data-link-peer-ipv4?      oc-inet:ipv4-prefix
+        |  |  +--rw data-link-peer-ipv6?      oc-inet:ipv6-prefix
+        |  +--ro state
+        |  |  +--ro data-link-interface?      oc-if:base-interface-ref
+        |  |  +--ro data-link-port?           oc-inet:port-number
+        |  |  +--ro data-link-ipv4?           oc-inet:ipv4-prefix
+        |  |  +--ro data-link-gateway?        oc-inet:ipv4-address
+        |  |  +--ro data-link-ipv6?           oc-inet:ipv6-prefix
+        |  |  +--ro data-link-ipv6-gateway?   oc-inet:ipv6-address
+        |  |  +--ro data-link-peer-ipv4?      oc-inet:ipv4-prefix
+        |  |  +--ro data-link-peer-ipv6?      oc-inet:ipv6-prefix
+        |  +--rw backup
+        |     +--rw config
+        |     |  +--rw data-link-interface?      oc-if:base-interface-ref
+        |     |  +--rw data-link-port?           oc-inet:port-number
+        |     |  +--rw data-link-ipv4?           oc-inet:ipv4-prefix
+        |     |  +--rw data-link-gateway?        oc-inet:ipv4-address
+        |     |  +--rw data-link-ipv6?           oc-inet:ipv6-prefix
+        |     |  +--rw data-link-ipv6-gateway?   oc-inet:ipv6-address
+        |     |  +--rw data-link-peer-ipv4?      oc-inet:ipv4-prefix
+        |     |  +--rw data-link-peer-ipv6?      oc-inet:ipv6-prefix
+        |     +--ro state
+        |        +--ro data-link-interface?      oc-if:base-interface-ref
+        |        +--ro data-link-port?           oc-inet:port-number
+        |        +--ro data-link-ipv4?           oc-inet:ipv4-prefix
+        |        +--ro data-link-gateway?        oc-inet:ipv4-address
+        |        +--ro data-link-ipv6?           oc-inet:ipv6-prefix
+        |        +--ro data-link-ipv6-gateway?   oc-inet:ipv6-address
+        |        +--ro data-link-peer-ipv4?      oc-inet:ipv4-prefix
+        |        +--ro data-link-peer-ipv6?      oc-inet:ipv6-prefix
+        +--rw interface-groups
+           +--rw interface-group* [id]
+              +--rw id        -> ../config/id
+              +--rw config
+              |  +--rw id?                     union
+              |  +--rw monitored-interfaces*   oc-if:base-interface-ref
+              |  +--rw group-policy?           enumeration
+              +--ro state
+                 +--ro id?                     union
+                 +--ro monitored-interfaces*   oc-if:base-interface-ref
+                 +--ro group-policy?           enumeration
+                 +--ro group-status?           enumeration
+

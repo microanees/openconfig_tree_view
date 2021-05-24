@@ -1,0 +1,10 @@
+module: openconfig-p4rt
+
+  augment /oc-if:interfaces/oc-if:interface/oc-if:config:
+    +--rw id?   uint32
+  augment /oc-if:interfaces/oc-if:interface/oc-if:state:
+    +--ro id?   uint32
+  augment /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-platform:config:
+    +--rw node-id?   uint64
+  augment /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-platform:state:
+    +--ro node-id?   uint64

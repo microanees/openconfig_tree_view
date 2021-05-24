@@ -143,3 +143,4 @@ module: openconfig-acl
                           +--ro sequence-id?       -> /acl/acl-sets/acl-set[name=current()/../../../../set-name][type=current()/../../../../type]/acl-entries/acl-entry/sequence-id
                           +--ro matched-packets?   oc-yang:counter64
                           +--ro matched-octets?    oc-yang:counter64
+
